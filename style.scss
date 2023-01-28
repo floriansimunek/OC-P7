@@ -1,0 +1,161 @@
+/* ALL */
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 85vw;
+	margin: 0 auto;
+	font-family: "Lato", Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 40px;
+	text-align: center;
+
+	a {
+		text-decoration: none;
+	}
+
+	h1 {
+		font-family: "DM Sans", sans-serif;
+		font-weight: 700;
+		font-size: 36px;
+		line-height: 47px;
+		color: #d04f4f;
+	}
+}
+
+/* SEARCH */
+.search {
+	margin-top: 20px;
+	position: relative;
+
+	#searchBar {
+		width: 100%;
+		background-color: #e7e7e7;
+		border: none;
+		border-radius: 5px;
+		padding: 25px;
+		font-weight: 400;
+		font-size: 18px;
+		line-height: 22px;
+	}
+
+	#searchIcon {
+		position: absolute;
+		top: 50%;
+		right: 15px;
+		transform: translate(0, -50%);
+	}
+}
+
+/* FILTERS */
+.filters {
+	margin-top: 20px;
+	display: flex;
+	gap: 20px;
+
+	select {
+		border: none;
+		border-radius: 5px;
+		color: white;
+		font-size: 18px;
+		line-height: 22px;
+		padding: 20px 15px;
+	}
+
+	#ingredients {
+		background-color: #3282f7;
+	}
+
+	#devices {
+		background-color: #68d9a4;
+	}
+
+	#utensils {
+		background-color: #ed6454;
+	}
+}
+
+/* RECIPES */
+.recipes {
+	margin-top: 25px;
+	display: flex;
+	justify-content: center;
+	gap: 50px;
+
+	.recipe-card {
+		&__image {
+			height: 200px;
+			width: 100%;
+			background-color: #c7bebe;
+			border-radius: 5px 5px 0 0;
+		}
+
+		&__description {
+			width: 100%;
+			padding: 20px;
+			background-color: #e7e7e7;
+			border-radius: 0 0 5px 5px;
+			display: flex;
+
+			&--left,
+			&--right {
+				width: 50%;
+
+				&__title {
+					margin-bottom: 20px;
+				}
+			}
+
+			&--left {
+				&__title {
+					font-weight: 400;
+					font-size: 18px;
+					line-height: 22px;
+				}
+
+				&__list {
+					list-style: none;
+
+					li {
+						.ingredient {
+							font-weight: bold;
+						}
+					}
+				}
+			}
+
+			&--right {
+				&__title {
+					font-weight: 700;
+					font-size: 18px;
+					line-height: 22px;
+
+					display: flex;
+					align-items: center;
+					justify-content: end;
+
+					img {
+						margin-right: 5px;
+					}
+				}
+
+				&__text {
+					font-family: "Roboto", sans-serif;
+					font-weight: 400;
+					font-size: 14px;
+					line-height: 100%;
+				}
+			}
+		}
+	}
+}

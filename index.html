@@ -7,6 +7,210 @@
 		<title>Les petits plats</title>
 		<!-- CSS -->
 		<link rel="stylesheet" href="style.css" />
+		<!-- FONT FAMILY -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
-	<body></body>
+	<body>
+		<!-- HEADER / LOGO -->
+		<header>
+			<a href="index.html">
+				<img
+					src="./assets/images/logo.svg"
+					alt="Logo Les petits plats"
+					class="logo"
+				/>
+				<h1>Les petits plats</h1>
+			</a>
+		</header>
+
+		<!-- SEARCH BAR -->
+		<section class="search">
+			<form action="" method="get">
+				<input
+					type="text"
+					name="searchBar"
+					id="searchBar"
+					placeholder="Rechercher une recette"
+				/>
+				<input
+					type="image"
+					id="searchIcon"
+					alt="Search Icon"
+					src="./assets/icons/search.svg"
+				/>
+			</form>
+		</section>
+
+		<!-- FILTERS -->
+		<section class="filters">
+			<select name="ingredients" id="ingredients">
+				<option value="" selected>Ingredients</option>
+				<option value="A">A</option>
+				<option value="B">B</option>
+				<option value="C">C</option>
+			</select>
+			<select name="devices" id="devices">
+				<option value="" selected>Appareils</option>
+				<option value="A">A</option>
+				<option value="B">B</option>
+				<option value="C">C</option>
+			</select>
+			<select name="utensils" id="utensils">
+				<option value="" selected>Ustensiles</option>
+				<option value="A">A</option>
+				<option value="B">B</option>
+				<option value="C">C</option>
+			</select>
+		</section>
+
+		<!-- RECIPES -->
+		<section class="recipes">
+			<div class="recipe-card">
+				<div class="recipe-card__image"></div>
+				<div class="recipe-card__description">
+					<div class="recipe-card__description--left">
+						<h2 class="recipe-card__description--left__title">
+							Limonade de Coco
+						</h2>
+						<ul class="recipe-card__description--left__list">
+							<li>
+								<span class="ingredient">Lait de coco:</span>
+								400ml
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 2
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 4
+								cuillères
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span>
+								20g
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 2
+							</li>
+						</ul>
+					</div>
+					<div class="recipe-card__description--right">
+						<h2 class="recipe-card__description--right__title">
+							<img
+								src="./assets/icons/clock.svg"
+								alt="Clock Icon"
+							/>
+							10 min
+						</h2>
+						<p class="recipe-card__description--right__text">
+							Mettre les glaçons à votre goût dans le blender,
+							ajouter le lait, la crème de coco, le jus de 2
+							citrons et le sucre. Mixer jusqu'à avoir la
+							consistence désirée.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="recipe-card">
+				<div class="recipe-card__image"></div>
+				<div class="recipe-card__description">
+					<div class="recipe-card__description--left">
+						<h2 class="recipe-card__description--left__title">
+							Limonade de Coco
+						</h2>
+						<ul class="recipe-card__description--left__list">
+							<li>
+								<span class="ingredient">Lait de coco:</span>
+								400ml
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 2
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 4
+								cuillères
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span>
+								20g
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 2
+							</li>
+						</ul>
+					</div>
+					<div class="recipe-card__description--right">
+						<h2 class="recipe-card__description--right__title">
+							<img
+								src="./assets/icons/clock.svg"
+								alt="Clock Icon"
+							/>
+							10 min
+						</h2>
+						<p class="recipe-card__description--right__text">
+							Mettre les glaçons à votre goût dans le blender,
+							ajouter le lait, la crème de coco, le jus de 2
+							citrons et le sucre. Mixer jusqu'à avoir la
+							consistence désirée.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="recipe-card">
+				<div class="recipe-card__image"></div>
+				<div class="recipe-card__description">
+					<div class="recipe-card__description--left">
+						<h2 class="recipe-card__description--left__title">
+							Limonade de Coco
+						</h2>
+						<ul class="recipe-card__description--left__list">
+							<li>
+								<span class="ingredient">Lait de coco:</span>
+								400ml
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 2
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 4
+								cuillères
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span>
+								20g
+							</li>
+							<li>
+								<span class="ingredient">Lait de coco:</span> 2
+							</li>
+						</ul>
+					</div>
+					<div class="recipe-card__description--right">
+						<h2 class="recipe-card__description--right__title">
+							<img
+								src="./assets/icons/clock.svg"
+								alt="Clock Icon"
+							/>
+							10 min
+						</h2>
+						<p class="recipe-card__description--right__text">
+							Mettre les glaçons à votre goût dans le blender,
+							ajouter le lait, la crème de coco, le jus de 2
+							citrons et le sucre. Mixer jusqu'à avoir la
+							consistence désirée.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
 </html>

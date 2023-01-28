@@ -1,1 +1,133 @@
+/* ALL */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
+html,
+body {
+  width: 85vw;
+  margin: 0 auto;
+  font-family: "Lato", Arial, Helvetica, sans-serif;
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  text-align: center;
+}
+header a {
+  text-decoration: none;
+}
+header h1 {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 47px;
+  color: #d04f4f;
+}
+
+/* SEARCH */
+.search {
+  margin-top: 20px;
+  position: relative;
+}
+.search #searchBar {
+  width: 100%;
+  background-color: #e7e7e7;
+  border: none;
+  border-radius: 5px;
+  padding: 25px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+.search #searchIcon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translate(0, -50%);
+}
+
+/* FILTERS */
+.filters {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+.filters select {
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 20px 15px;
+}
+.filters #ingredients {
+  background-color: #3282f7;
+}
+.filters #devices {
+  background-color: #68d9a4;
+}
+.filters #utensils {
+  background-color: #ed6454;
+}
+
+/* RECIPES */
+.recipes {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+.recipes .recipe-card__image {
+  height: 200px;
+  width: 100%;
+  background-color: #c7bebe;
+  border-radius: 5px 5px 0 0;
+}
+.recipes .recipe-card__description {
+  width: 100%;
+  padding: 20px;
+  background-color: #e7e7e7;
+  border-radius: 0 0 5px 5px;
+  display: flex;
+}
+.recipes .recipe-card__description--left, .recipes .recipe-card__description--right {
+  width: 50%;
+}
+.recipes .recipe-card__description--left__title, .recipes .recipe-card__description--right__title {
+  margin-bottom: 20px;
+}
+.recipes .recipe-card__description--left__title {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+.recipes .recipe-card__description--left__list {
+  list-style: none;
+}
+.recipes .recipe-card__description--left__list li .ingredient {
+  font-weight: bold;
+}
+.recipes .recipe-card__description--right__title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.recipes .recipe-card__description--right__title img {
+  margin-right: 5px;
+}
+.recipes .recipe-card__description--right__text {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+}
