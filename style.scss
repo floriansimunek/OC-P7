@@ -63,25 +63,53 @@ header {
 	display: flex;
 	gap: 20px;
 
-	select {
+	input {
 		border: none;
 		border-radius: 5px;
-		color: white;
+		color: #fff;
 		font-size: 18px;
 		line-height: 22px;
 		padding: 20px 15px;
+		width: 170px;
+
+		&::placeholder {
+			color: #cecece;
+		}
 	}
 
-	#ingredients {
-		background-color: #3282f7;
+	&__ingredients {
+		input {
+			background-color: #3282f7;
+		}
 	}
 
-	#devices {
-		background-color: #68d9a4;
+	&__devices {
+		input {
+			background-color: #68d9a4;
+		}
 	}
 
-	#utensils {
-		background-color: #ed6454;
+	&__utensils {
+		input {
+			background-color: #ed6454;
+		}
+	}
+
+	&__ingredients,
+	&__devices,
+	&__utensils {
+		position: relative;
+
+		.arrow {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translate(0, -50%);
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
 	}
 }
 
@@ -165,6 +193,7 @@ header {
 					font-weight: 400;
 					font-size: 14px;
 					line-height: 100%;
+					text-align: justify;
 				}
 			}
 		}

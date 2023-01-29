@@ -59,22 +59,38 @@ header h1 {
   display: flex;
   gap: 20px;
 }
-.filters select {
+.filters input {
   border: none;
   border-radius: 5px;
-  color: white;
+  color: #fff;
   font-size: 18px;
   line-height: 22px;
   padding: 20px 15px;
+  width: 170px;
 }
-.filters #ingredients {
+.filters input::placeholder {
+  color: #cecece;
+}
+.filters__ingredients input {
   background-color: #3282f7;
 }
-.filters #devices {
+.filters__devices input {
   background-color: #68d9a4;
 }
-.filters #utensils {
+.filters__utensils input {
   background-color: #ed6454;
+}
+.filters__ingredients, .filters__devices, .filters__utensils {
+  position: relative;
+}
+.filters__ingredients .arrow, .filters__devices .arrow, .filters__utensils .arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translate(0, -50%);
+}
+.filters__ingredients .arrow:hover, .filters__devices .arrow:hover, .filters__utensils .arrow:hover {
+  cursor: pointer;
 }
 
 /* RECIPES */
@@ -139,4 +155,5 @@ header h1 {
   font-weight: 400;
   font-size: 14px;
   line-height: 100%;
+  text-align: justify;
 }

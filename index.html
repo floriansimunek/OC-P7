@@ -43,24 +43,21 @@
 
 		<!-- FILTERS -->
 		<section class="filters">
-			<select name="ingredients" id="ingredients">
-				<option value="" selected>Ingredients</option>
-				<option value="A">A</option>
-				<option value="B">B</option>
-				<option value="C">C</option>
-			</select>
-			<select name="devices" id="devices">
-				<option value="" selected>Appareils</option>
-				<option value="A">A</option>
-				<option value="B">B</option>
-				<option value="C">C</option>
-			</select>
-			<select name="utensils" id="utensils">
-				<option value="" selected>Ustensiles</option>
-				<option value="A">A</option>
-				<option value="B">B</option>
-				<option value="C">C</option>
-			</select>
+			<div class="filters__ingredients">
+				<input type="text" name="ingredients" id="ingredients" value="Ingrédients" placeholder="Rechercher un ingrédient" />
+				<img src="./assets/icons/arrow.svg" alt="arrow icon" class="arrow" />
+				<ul class="filters__utensils__option"></ul>
+			</div>
+			<div class="filters__devices">
+				<input type="text" name="devices" id="devices" value="Appareils" placeholder="Rechercher un appareil" />
+				<img src="./assets/icons/arrow.svg" alt="arrow icon" class="arrow" />
+				<ul class="filters__utensils__option"></ul>
+			</div>
+			<div class="filters__utensils">
+				<input type="text" name="utensils" id="utensils" value="Ustensiles" placeholder="Rechercher un ustensile" />
+				<img src="./assets/icons/arrow.svg" alt="arrow icon" class="arrow" />
+				<ul class="filters__utensils__option"></ul>
+			</div>
 		</section>
 
 		<!-- RECIPES -->
