@@ -1,6 +1,6 @@
 class App {
 	constructor() {
-		this._Api = new Api("./data/recipes.json");
+		this._Api = new Api();
 		this._data = [];
 		this._Recipes = [];
 	}
@@ -8,7 +8,7 @@ class App {
 	async init() {
 		await this.getDatas();
 
-		this._data.recipes.forEach((recipe, i) => {
+		this._data.forEach((recipe, i) => {
 			this._Recipes.push(new Recipe(recipe));
 			this._Recipes[i].createCardDOM();
 		});
