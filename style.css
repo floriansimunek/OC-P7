@@ -108,13 +108,18 @@ header h1 {
 .filters__ingredients, .filters__devices, .filters__utensils {
   position: relative;
 }
-.filters__ingredients .arrow, .filters__devices .arrow, .filters__utensils .arrow {
+.filters__ingredients .arrow__block, .filters__devices .arrow__block, .filters__utensils .arrow__block {
+  height: 50%;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translate(0, -50%);
 }
-.filters__ingredients .arrow:hover, .filters__devices .arrow:hover, .filters__utensils .arrow:hover {
+.filters__ingredients .arrow__block:hover, .filters__devices .arrow__block:hover, .filters__utensils .arrow__block:hover {
   cursor: pointer;
 }
 

@@ -128,7 +128,12 @@ header {
 	&__utensils {
 		position: relative;
 
-		.arrow {
+		.arrow__block {
+			height: 50%;
+			width: 30px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			position: absolute;
 			top: 50%;
 			right: 10px;
