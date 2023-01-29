@@ -83,6 +83,7 @@ header h1 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 50px;
+  padding-bottom: 50px;
 }
 .recipes .recipe-card.hidden {
   display: none;

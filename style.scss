@@ -91,6 +91,7 @@ header {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	gap: 50px;
+	padding-bottom: 50px;
 
 	.recipe-card {
 		&.hidden {
