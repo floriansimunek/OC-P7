@@ -80,8 +80,8 @@ header h1 {
 /* RECIPES */
 .recipes {
   margin-top: 25px;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 50px;
 }
 .recipes .recipe-card__image {
@@ -119,6 +119,7 @@ header h1 {
   font-size: 18px;
   line-height: 22px;
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: end;
 }
