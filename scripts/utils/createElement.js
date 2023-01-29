@@ -48,7 +48,7 @@ function createList(items, attributes) {
 			[
 				{
 					name: "textContent",
-					value: item.quantity ? item.ingredient + ": " : item.ingredient,
+					value: item.quantity ? item.ingredient + " : " : item.ingredient,
 				},
 			],
 		);

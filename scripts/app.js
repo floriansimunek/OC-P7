@@ -17,7 +17,10 @@ class App {
 
 			if (inputValue.length >= MIN_INPUT_LENGTH) {
 				this._Recipes.forEach((recipe) => {
-					if (recipe.name.toLowerCase().trim().includes(inputValue)) {
+					const FILTER_NAME = recipe.name.toLowerCase().trim().includes(inputValue);
+					const FILTER_DESCRIPTION = recipe.description.toLowerCase().trim().includes(inputValue);
+
+					if (FILTER_NAME || FILTER_DESCRIPTION) {
 						let r = document.querySelector("#recipe_" + recipe.id);
 						r.classList.add("show");
 						r.classList.remove("hidden");
