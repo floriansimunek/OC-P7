@@ -42,7 +42,7 @@ function createList(items, attributes) {
 	items.forEach((item) => {
 		const li = createElement("li");
 
-		const span1 = createElement(
+		const ingredient = createElement(
 			"span",
 			[{ name: "class", value: "ingredient" }],
 			[
@@ -53,7 +53,7 @@ function createList(items, attributes) {
 			],
 		);
 
-		const span2 = createElement(
+		const quantity = createElement(
 			"span",
 			[],
 			[
@@ -64,7 +64,7 @@ function createList(items, attributes) {
 			],
 		);
 
-		li.append(span1, span2);
+		li.append(ingredient, quantity);
 		element.appendChild(li);
 	});
 
