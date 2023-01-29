@@ -3,6 +3,8 @@ class App {
 		this._data = recipes;
 		this._Recipes = [];
 		this._searchBar = document.querySelector("#searchBar");
+		this._filtersBlock = document.querySelector(".filters__block");
+		this._filtersInputs = document.querySelectorAll(".filters__block input");
 	}
 
 	async init() {
@@ -11,11 +13,17 @@ class App {
 			this._Recipes[i].createCardDOM();
 		});
 
+		this.initSearchBar();
+		this.initFiltersInputs();
+	}
+
+	initSearchBar() {
 		this._searchBar.addEventListener("input", (e) => {
 			let inputValue = e.target.value.toLowerCase().trim();
 			const MIN_INPUT_LENGTH = 3;
 
 			this._Recipes.forEach((recipe) => {
+				//TODO: without "à é"
 				const FILTER_NAME = recipe.name.toLowerCase().trim().includes(inputValue);
 				const FILTER_DESCRIPTION = recipe.description.toLowerCase().trim().includes(inputValue);
 				const FILTER_INGREDIENTS = recipe.ingredients.some((item) => item.ingredient.toLowerCase().trim().includes(inputValue));
@@ -31,6 +39,82 @@ class App {
 				}
 			});
 		});
+	}
+
+	initFiltersInputs() {
+		const ingredientsOption = document.querySelector(".filters__ingredients__option");
+		const devicesOption = document.querySelector(".filters__devices__option");
+		const utensilsOption = document.querySelector(".filters__utensils__option");
+
+		this._filtersInputs.forEach((input) => {
+			let defaultInputValue = input.value;
+
+			input.addEventListener("focus", () => {
+				input.value = "";
+				input.style.width = "65vw";
+			});
+
+			input.addEventListener("blur", () => {
+				input.value = defaultInputValue;
+				input.style.width = "170px";
+			});
+		});
+
+		let ingredientsList = this.getIngredientsList();
+		let devicesList = this.getDevicesList();
+		let utensilsList = this.getUtensilsList();
+
+		ingredientsList.forEach((ingredient) => {
+			let li = document.createElement("li");
+			li.textContent = ingredient;
+
+			ingredientsOption.append(li);
+		});
+
+		devicesList.forEach((device) => {
+			let li = document.createElement("li");
+			li.textContent = device;
+
+			devicesOption.append(li);
+		});
+
+		utensilsList.forEach((utensil) => {
+			let li = document.createElement("li");
+			li.textContent = utensil;
+
+			utensilsOption.append(li);
+		});
+	}
+
+	getIngredientsList() {
+		let list = [];
+
+		this._Recipes.forEach((recipe) => {
+			recipe.ingredients.forEach((item) => {
+				list.push(item.ingredient);
+			});
+		});
+		return (list = [...new Set(list)].sort());
+	}
+
+	getDevicesList() {
+		let list = [];
+
+		this._Recipes.forEach((recipe) => {
+			list.push(recipe.appliance);
+		});
+		return (list = [...new Set(list)].sort());
+	}
+
+	getUtensilsList() {
+		let list = [];
+
+		this._Recipes.forEach((recipe) => {
+			recipe.ustensils.forEach((item) => {
+				list.push(item);
+			});
+		});
+		return (list = [...new Set(list)].sort());
 	}
 
 	showElement(element) {
