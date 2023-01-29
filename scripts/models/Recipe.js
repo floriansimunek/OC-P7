@@ -47,17 +47,12 @@ class Recipe {
 		if (this.recipesWrapper) {
 			const article = createBlock("article", [
 				{ name: "class", value: "recipe-card" },
+				{ name: "id", value: "recipe_" + this.id },
 			]);
-			const header = createBlock("header", [
-				{ name: "class", value: "recipe-card__image" },
-			]);
-			const footer = createBlock("footer", [
-				{ name: "class", value: "recipe-card__description" },
-			]);
+			const header = createBlock("header", [{ name: "class", value: "recipe-card__image" }]);
+			const footer = createBlock("footer", [{ name: "class", value: "recipe-card__description" }]);
 
-			const leftBlock = createBlock("footer", [
-				{ name: "class", value: "recipe-card__description--left" },
-			]);
+			const leftBlock = createBlock("footer", [{ name: "class", value: "recipe-card__description--left" }]);
 			const leftBlockTitle = createHeading(2, this.name, [
 				{
 					name: "class",
@@ -71,19 +66,14 @@ class Recipe {
 				},
 			]);
 
-			const rightBlock = createBlock("footer", [
-				{ name: "class", value: "recipe-card__description--right" },
-			]);
+			const rightBlock = createBlock("footer", [{ name: "class", value: "recipe-card__description--right" }]);
 			const rightBlockTitle = createHeading(2, this.time + " min", [
 				{
 					name: "class",
 					value: "recipe-card__description--right__title",
 				},
 			]);
-			const rightBlockIconTitle = createImage(
-				"./assets/icons/clock.svg",
-				[{ name: "alt", value: "Clock Icon" }],
-			);
+			const rightBlockIconTitle = createImage("./assets/icons/clock.svg", [{ name: "alt", value: "Clock Icon" }]);
 			const rightBlockParagraph = createParagraph(this.description, [
 				{
 					name: "class",
