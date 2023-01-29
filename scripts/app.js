@@ -15,6 +15,45 @@ class App {
 
 		this.initSearchBar();
 		this.initFiltersInputs();
+
+		const ingredientsOptions = document.querySelector(".filters__ingredients__option");
+		const ingredientsArrow = document.querySelector(".filters__ingredients .arrow__block");
+
+		ingredientsArrow.addEventListener("click", () => {
+			if (ingredientsOptions.style.display === "none") {
+				ingredientsOptions.style.display = "flex";
+				ingredientsArrow.classList.add("open");
+			} else {
+				ingredientsOptions.style.display = "none";
+				ingredientsArrow.classList.remove("open");
+			}
+		});
+
+		const devicesOptions = document.querySelector(".filters__devices__option");
+		const devicesArrow = document.querySelector(".filters__devices .arrow__block");
+
+		devicesArrow.addEventListener("click", () => {
+			if (devicesOptions.style.display === "none") {
+				devicesOptions.style.display = "flex";
+				devicesArrow.classList.add("open");
+			} else {
+				devicesOptions.style.display = "none";
+				devicesArrow.classList.remove("open");
+			}
+		});
+
+		const utensilsOptions = document.querySelector(".filters__utensils__option");
+		const utensilsArrow = document.querySelector(".filters__utensils .arrow__block");
+
+		utensilsArrow.addEventListener("click", () => {
+			if (utensilsOptions.style.display === "none") {
+				utensilsOptions.style.display = "flex";
+				utensilsArrow.classList.add("open");
+			} else {
+				utensilsOptions.style.display = "none";
+				utensilsArrow.classList.remove("open");
+			}
+		});
 	}
 
 	initSearchBar() {

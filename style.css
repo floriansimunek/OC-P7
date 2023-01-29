@@ -80,9 +80,8 @@ header h1 {
   color: #fff;
   border-radius: 0 0 5px 5px;
   position: absolute;
-  width: 100%;
+  width: 80vw;
   height: 600px;
-  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: flex-start;
@@ -118,9 +117,13 @@ header h1 {
   top: 50%;
   right: 10px;
   transform: translate(0, -50%);
+  transition: transform 0.2s ease;
 }
 .filters__ingredients .arrow__block:hover, .filters__devices .arrow__block:hover, .filters__utensils .arrow__block:hover {
   cursor: pointer;
+}
+.filters__ingredients .arrow__block.open, .filters__devices .arrow__block.open, .filters__utensils .arrow__block.open {
+  transform: rotate(180deg) translate(0, 50%);
 }
 
 /* RECIPES */

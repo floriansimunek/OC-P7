@@ -86,9 +86,8 @@ header {
 			color: #fff;
 			border-radius: 0 0 5px 5px;
 			position: absolute;
-			width: 100%;
+			width: 80vw;
 			height: 600px;
-			display: flex;
 			flex-direction: column;
 			justify-content: flex-start;
 			align-content: flex-start;
@@ -138,9 +137,14 @@ header {
 			top: 50%;
 			right: 10px;
 			transform: translate(0, -50%);
+			transition: transform 0.2s ease;
 
 			&:hover {
 				cursor: pointer;
+			}
+
+			&.open {
+				transform: rotate(180deg) translate(0, 50%);
 			}
 		}
 	}
