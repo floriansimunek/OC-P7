@@ -12,35 +12,35 @@ class App {
 		});
 
 		this._searchBar.addEventListener("input", (e) => {
-			const MIN_INPUT_LENGTH = 3;
 			let inputValue = e.target.value.toLowerCase().trim();
+			const MIN_INPUT_LENGTH = 3;
 
-			if (inputValue.length >= MIN_INPUT_LENGTH) {
-				this._Recipes.forEach((recipe) => {
-					const FILTER_NAME = recipe.name.toLowerCase().trim().includes(inputValue);
-					const FILTER_DESCRIPTION = recipe.description.toLowerCase().trim().includes(inputValue);
-					const FILTER_INGREDIENTS = recipe.ingredients.some((item) => item.ingredient.toLowerCase().trim().includes(inputValue));
+			this._Recipes.forEach((recipe) => {
+				const FILTER_NAME = recipe.name.toLowerCase().trim().includes(inputValue);
+				const FILTER_DESCRIPTION = recipe.description.toLowerCase().trim().includes(inputValue);
+				const FILTER_INGREDIENTS = recipe.ingredients.some((item) => item.ingredient.toLowerCase().trim().includes(inputValue));
 
+				if (inputValue.length >= MIN_INPUT_LENGTH) {
 					if (FILTER_NAME || FILTER_DESCRIPTION || FILTER_INGREDIENTS) {
-						let r = document.querySelector("#recipe_" + recipe.id);
-						r.classList.add("show");
-						r.classList.remove("hidden");
+						this.showElement(document.querySelector("#recipe_" + recipe.id));
 					} else {
-						let r = document.querySelector("#recipe_" + recipe.id);
-						r.classList.remove("show");
-						r.classList.add("hidden");
+						this.hideElement(document.querySelector("#recipe_" + recipe.id));
 					}
-				});
-			} else if (inputValue.length < MIN_INPUT_LENGTH) {
-				this._Recipes.forEach((recipe) => {
-					let r = document.querySelector("#recipe_" + recipe.id);
-					r.classList.add("show");
-					r.classList.remove("hidden");
-				});
-			} else {
-				console.error("Input value error");
-			}
+				} else {
+					this.showElement(document.querySelector("#recipe_" + recipe.id));
+				}
+			});
 		});
+	}
+
+	showElement(element) {
+		element.classList.add("show");
+		element.classList.remove("hidden");
+	}
+
+	hideElement(element) {
+		element.classList.remove("show");
+		element.classList.add("hidden");
 	}
 }
 
