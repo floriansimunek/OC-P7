@@ -19,7 +19,7 @@ class App {
 
 	initSearchBar() {
 		this._searchBar.addEventListener("input", (e) => {
-			let inputValue = e.target.value.toLowerCase().trim();
+			let inputValue = input.value.toLowerCase().trim();
 			const MIN_INPUT_LENGTH = 3;
 
 			this._Recipes.forEach((recipe) => {
@@ -42,6 +42,37 @@ class App {
 	}
 
 	initFiltersInputs() {
+		const INPUTS = document.querySelectorAll(".filters__input");
+		const ARROWS = document.querySelectorAll(".filters__block__arrow");
+
+		INPUTS.forEach((input) => {
+			let defaultValue = input.value;
+			let inputArrow = input.nextElementSibling;
+			const FILTER_LIST = input.parentNode.parentNode.querySelector(".filters__option");
+
+			input.addEventListener("focus", () => {
+				input.value = "";
+				input.classList.toggle("expanded");
+			});
+
+			input.addEventListener("blur", () => {
+				input.value = defaultValue;
+				input.classList.toggle("expanded");
+			});
+
+			inputArrow.addEventListener("focus", () => {
+				input.value = "";
+				input.classList.toggle("open");
+				FILTER_LIST.classList.toggle("open");
+			});
+
+			inputArrow.addEventListener("blur", () => {
+				input.value = defaultValue;
+				input.classList.toggle("open");
+				FILTER_LIST.classList.toggle("open");
+			});
+		});
+
 		this.initFiltersLists();
 	}
 

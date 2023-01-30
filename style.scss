@@ -83,6 +83,10 @@ header {
 		}
 	}
 
+	&__input__block {
+		position: relative;
+	}
+
 	&__input {
 		border: none;
 		border-radius: 5px;
@@ -97,19 +101,49 @@ header {
 			color: #dddddd;
 		}
 
+		&.expanded {
+			width: 340px;
+		}
+
 		&#ingredients {
 			background-color: #3282f7;
+
+			&.open {
+				width: 60vw;
+			}
 		}
 		&#devices {
 			background-color: #68d9a4;
+
+			&.open {
+				width: 30vw;
+			}
 		}
 		&#utensils {
 			background-color: #ed6454;
+
+			&.open {
+				width: 20vw;
+			}
 		}
 	}
 
 	&__option {
 		display: none;
+
+		&.open {
+			display: flex;
+		}
+
+		&__ingredients {
+			background-color: #3282f7;
+		}
+		&__devices {
+			background-color: #68d9a4;
+		}
+		&__utensils {
+			background-color: #ed6454;
+		}
 	}
 }
 
