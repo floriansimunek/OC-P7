@@ -80,25 +80,6 @@ header {
 				color: #dddddd;
 			}
 		}
-
-		&__option {
-			list-style-type: none;
-			color: #fff;
-			border-radius: 0 0 5px 5px;
-			position: absolute;
-			width: 80vw;
-			height: 600px;
-			flex-direction: column;
-			justify-content: flex-start;
-			align-content: flex-start;
-			flex-wrap: wrap;
-			display: none;
-
-			li {
-				flex-basis: 6%;
-				width: 13%;
-			}
-		}
 	}
 
 	&__ingredients {
@@ -119,33 +100,6 @@ header {
 		input,
 		ul {
 			background-color: #ed6454;
-		}
-	}
-
-	&__ingredients,
-	&__devices,
-	&__utensils {
-		position: relative;
-
-		.arrow__block {
-			height: 50%;
-			width: 30px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			position: absolute;
-			top: 50%;
-			right: 10px;
-			transform: translate(0, -50%);
-			transition: transform 0.2s ease;
-
-			&:hover {
-				cursor: pointer;
-			}
-
-			&.open {
-				transform: rotate(180deg) translate(0, 50%);
-			}
 		}
 	}
 }

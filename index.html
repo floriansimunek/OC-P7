@@ -44,27 +44,40 @@
 		<!-- FILTERS -->
 		<section class="filters">
 			<div class="filters__block filters__ingredients">
-				<input type="text" name="ingredients" id="ingredients" value="Ingrédients" placeholder="Rechercher un ingrédient" />
-				<div class="arrow__block">
+				<input
+					type="text"
+					name="ingredients"
+					id="ingredients"
+					class="filters__input"
+					value="Ingrédients"
+					placeholder="Rechercher un ingrédient"
+				/>
+				<div class="filters__block__arrow">
 					<img src="./assets/icons/arrow.svg" alt="arrow icon" class="arrow" />
 				</div>
-				<ul class="filters__block__option filters__ingredients__option"></ul>
+				<div class="filters__option__block filters__option__ingredients">
+					<ul class="filters__option__ingredients__list filters__option__list"></ul>
+				</div>
 			</div>
 
 			<div class="filters__block filters__devices">
-				<input type="text" name="devices" id="devices" value="Appareils" placeholder="Rechercher un appareil" />
-				<div class="arrow__block">
+				<input type="text" name="devices" id="devices" class="filters__input" value="Appareils" placeholder="Rechercher un appareil" />
+				<div class="filters__block__arrow">
 					<img src="./assets/icons/arrow.svg" alt="arrow icon" class="arrow" />
 				</div>
-				<ul class="filters__block__option filters__devices__option"></ul>
+				<div class="filters__option__block filters__devices__option">
+					<ul class="filters__devices__option__list filters__option__list"></ul>
+				</div>
 			</div>
 
 			<div class="filters__block filters__utensils">
-				<input type="text" name="utensils" id="utensils" value="Ustensiles" placeholder="Rechercher un ustensile" />
-				<div class="arrow__block">
+				<input type="text" name="utensils" id="utensils" class="filters__input" value="Ustensiles" placeholder="Rechercher un ustensile" />
+				<div class="filters__block__arrow">
 					<img src="./assets/icons/arrow.svg" alt="arrow icon" class="arrow" />
 				</div>
-				<ul class="filters__block__option filters__utensils__option"></ul>
+				<div class="filters__option__block filters__utensils__option">
+					<ul class="filters__utensils__option__list filters__option__list"></ul>
+				</div>
 			</div>
 		</section>
 

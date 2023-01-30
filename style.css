@@ -75,23 +75,6 @@ header h1 {
 .filters__block input::placeholder {
   color: #dddddd;
 }
-.filters__block__option {
-  list-style-type: none;
-  color: #fff;
-  border-radius: 0 0 5px 5px;
-  position: absolute;
-  width: 80vw;
-  height: 600px;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: flex-start;
-  flex-wrap: wrap;
-  display: none;
-}
-.filters__block__option li {
-  flex-basis: 6%;
-  width: 13%;
-}
 .filters__ingredients input,
 .filters__ingredients ul {
   background-color: #3282f7;
@@ -103,27 +86,6 @@ header h1 {
 .filters__utensils input,
 .filters__utensils ul {
   background-color: #ed6454;
-}
-.filters__ingredients, .filters__devices, .filters__utensils {
-  position: relative;
-}
-.filters__ingredients .arrow__block, .filters__devices .arrow__block, .filters__utensils .arrow__block {
-  height: 50%;
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translate(0, -50%);
-  transition: transform 0.2s ease;
-}
-.filters__ingredients .arrow__block:hover, .filters__devices .arrow__block:hover, .filters__utensils .arrow__block:hover {
-  cursor: pointer;
-}
-.filters__ingredients .arrow__block.open, .filters__devices .arrow__block.open, .filters__utensils .arrow__block.open {
-  transform: rotate(180deg) translate(0, 50%);
 }
 
 /* RECIPES */
