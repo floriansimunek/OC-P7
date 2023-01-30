@@ -14,7 +14,7 @@ class App {
 		});
 
 		this.initSearchBar();
-		this.initFiltersLists();
+		this.initFiltersInputs();
 	}
 
 	initSearchBar() {
@@ -25,21 +25,24 @@ class App {
 			this._Recipes.forEach((recipe) => {
 				const FILTER_NAME = this.removeAccents(recipe.name).toLowerCase().trim().includes(this.removeAccents(inputValue));
 				const FILTER_DESCRIPTION = this.removeAccents(recipe.description).toLowerCase().trim().includes(inputValue);
-				const FILTER_INGREDIENTS = recipe.ingredients.some((item) =>
-					this.removeAccents(item.ingredient).toLowerCase().trim().includes(inputValue),
-				);
+				const FILTER_INGREDIENTS = recipe.ingredients.some((item) => this.removeAccents(item.ingredient).toLowerCase().trim().includes(inputValue));
+				let card = document.querySelector("#recipe_" + recipe.id);
 
 				if (inputValue.length >= MIN_INPUT_LENGTH) {
 					if (FILTER_NAME || FILTER_DESCRIPTION || FILTER_INGREDIENTS) {
-						this.showElement(document.querySelector("#recipe_" + recipe.id));
+						this.showElement(card);
 					} else {
-						this.hideElement(document.querySelector("#recipe_" + recipe.id));
+						this.hideElement(card);
 					}
 				} else {
-					this.showElement(document.querySelector("#recipe_" + recipe.id));
+					this.showElement(card);
 				}
 			});
 		});
+	}
+
+	initFiltersInputs() {
+		this.initFiltersLists();
 	}
 
 	initFiltersLists() {
