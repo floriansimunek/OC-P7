@@ -62,7 +62,21 @@ header h1 {
 .filters__block {
   position: relative;
 }
-.filters__block input {
+.filters__block__arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(0, -50%);
+}
+.filters__block__arrow:hover {
+  cursor: pointer;
+}
+.filters__input {
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -72,20 +86,20 @@ header h1 {
   width: 170px;
   transition: width 0.2s ease;
 }
-.filters__block input::placeholder {
+.filters__input::placeholder {
   color: #dddddd;
 }
-.filters__ingredients input,
-.filters__ingredients ul {
+.filters__input#ingredients {
   background-color: #3282f7;
 }
-.filters__devices input,
-.filters__devices ul {
+.filters__input#devices {
   background-color: #68d9a4;
 }
-.filters__utensils input,
-.filters__utensils ul {
+.filters__input#utensils {
   background-color: #ed6454;
+}
+.filters__option {
+  display: none;
 }
 
 /* RECIPES */

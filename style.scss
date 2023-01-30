@@ -66,41 +66,50 @@ header {
 	&__block {
 		position: relative;
 
-		input {
-			border: none;
-			border-radius: 5px;
-			color: #fff;
-			font-size: 18px;
-			line-height: 22px;
-			padding: 20px 15px;
-			width: 170px;
-			transition: width 0.2s ease;
+		&__arrow {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			width: 30px;
+			height: 30px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform: translate(0, -50%);
 
-			&::placeholder {
-				color: #dddddd;
+			&:hover {
+				cursor: pointer;
 			}
 		}
 	}
 
-	&__ingredients {
-		input,
-		ul {
+	&__input {
+		border: none;
+		border-radius: 5px;
+		color: #fff;
+		font-size: 18px;
+		line-height: 22px;
+		padding: 20px 15px;
+		width: 170px;
+		transition: width 0.2s ease;
+
+		&::placeholder {
+			color: #dddddd;
+		}
+
+		&#ingredients {
 			background-color: #3282f7;
 		}
-	}
-
-	&__devices {
-		input,
-		ul {
+		&#devices {
 			background-color: #68d9a4;
 		}
-	}
-
-	&__utensils {
-		input,
-		ul {
+		&#utensils {
 			background-color: #ed6454;
 		}
+	}
+
+	&__option {
+		display: none;
 	}
 }
 
