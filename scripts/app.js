@@ -14,8 +14,7 @@ class App {
 		});
 
 		this.initSearchBar();
-		// this.initFiltersInputs();
-		console.log(this.getList("ingredients"));
+		this.initFiltersLists();
 	}
 
 	initSearchBar() {
@@ -41,22 +40,40 @@ class App {
 		});
 	}
 
-	// initFiltersInputs() {}
+	initFiltersLists() {
+		let that = this;
+		let lists = {
+			ingredients: document.querySelector(".filters__option__ingredients__list"),
+			appliance: document.querySelector(".filters__option__devices__list"),
+			ustensils: document.querySelector(".filters__option__utensils__list"),
+		};
 
-	getList(type) {
-		let list = [];
+		Object.keys(lists).forEach((type) => {
+			let items = getList(type);
 
-		this._Recipes.forEach((recipe) => {
-			if (type === "appliance") {
-				list.push(recipe[type]);
-			} else {
-				recipe[type].forEach((item) => {
-					list.push(type === "ustensils" ? item : item["ingredient"]);
-				});
-			}
+			items.forEach((item) => {
+				let li = document.createElement("li");
+				li.textContent = item;
+
+				lists[type].append(li);
+			});
 		});
 
-		return [...new Set(list)].sort();
+		function getList(type) {
+			let list = [];
+
+			that._Recipes.forEach((recipe) => {
+				if (type === "appliance") {
+					list.push(recipe[type]);
+				} else {
+					recipe[type].forEach((item) => {
+						list.push(type === "ustensils" ? item : item["ingredient"]);
+					});
+				}
+			});
+
+			return [...new Set(list)].sort();
+		}
 	}
 
 	showElement(element) {
