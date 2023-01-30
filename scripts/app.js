@@ -23,9 +23,11 @@ class App {
 			const MIN_INPUT_LENGTH = 3;
 
 			this._Recipes.forEach((recipe) => {
-				const FILTER_NAME = recipe.name.toLowerCase().trim().includes(inputValue);
-				const FILTER_DESCRIPTION = recipe.description.toLowerCase().trim().includes(inputValue);
-				const FILTER_INGREDIENTS = recipe.ingredients.some((item) => item.ingredient.toLowerCase().trim().includes(inputValue));
+				const FILTER_NAME = this.removeAccents(recipe.name).toLowerCase().trim().includes(this.removeAccents(inputValue));
+				const FILTER_DESCRIPTION = this.removeAccents(recipe.description).toLowerCase().trim().includes(inputValue);
+				const FILTER_INGREDIENTS = recipe.ingredients.some((item) =>
+					this.removeAccents(item.ingredient).toLowerCase().trim().includes(inputValue),
+				);
 
 				if (inputValue.length >= MIN_INPUT_LENGTH) {
 					if (FILTER_NAME || FILTER_DESCRIPTION || FILTER_INGREDIENTS) {
@@ -84,6 +86,10 @@ class App {
 	hideElement(element) {
 		element.classList.remove("show");
 		element.classList.add("hidden");
+	}
+
+	removeAccents(str) {
+		return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 	}
 }
 
