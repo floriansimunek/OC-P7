@@ -53,6 +53,31 @@ header h1 {
   transform: translate(0, -50%);
 }
 
+/* SELECTED FILTERS */
+.selected-filters {
+  margin-top: 20px;
+}
+.selected-filters__list {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+}
+.selected-filters__list li {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #3282f7;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.selected-filters__list li span::first-letter {
+  text-transform: capitalize;
+}
+
 /* FILTERS */
 .filters {
   margin-top: 20px;
@@ -136,12 +161,16 @@ header h1 {
   flex-wrap: wrap;
   list-style: none;
 }
-.filters__option__list li {
+.filters__option__list__item {
   color: #fff;
   flex-basis: 5%;
   font-size: 18px;
 }
-.filters__option__list li::first-letter {
+.filters__option__list__item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.3137254902);
+}
+.filters__option__list__item::first-letter {
   text-transform: capitalize;
 }
 .filters__option__ingredients {

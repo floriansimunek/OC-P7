@@ -5,6 +5,11 @@ class App {
 		this._searchBar = document.querySelector("#searchBar");
 		this._filtersBlock = document.querySelector(".filters__block");
 		this._filtersInputs = document.querySelectorAll(".filters__block input");
+		this._filterItemsSelected = {
+			ingredients: [],
+			appliance: [],
+			ustensils: [],
+		};
 	}
 
 	async init() {
@@ -43,7 +48,6 @@ class App {
 
 	initFiltersInputs() {
 		const INPUTS = document.querySelectorAll(".filters__input");
-		const ARROWS = document.querySelectorAll(".filters__block__arrow");
 
 		INPUTS.forEach((input) => {
 			let defaultValue = input.value;
@@ -67,13 +71,54 @@ class App {
 			});
 
 			inputArrow.addEventListener("blur", () => {
-				input.value = defaultValue;
-				input.classList.toggle("open");
-				FILTER_LIST.classList.toggle("open");
+				setTimeout(() => {
+					input.value = defaultValue;
+					input.classList.toggle("open");
+					FILTER_LIST.classList.toggle("open");
+				}, 200);
 			});
 		});
 
 		this.initFiltersLists();
+
+		const SELECTED_INGREDIENTS = document.querySelector(".selected-filters__ingredients");
+		const SELECTED_APPLIANCE = document.querySelector(".selected-filters__appliance");
+		const SELECTED_UTENSILS = document.querySelector(".selected-filters__utensils");
+
+		document.querySelectorAll(".filters__option__list__item").forEach((item) => {
+			item.addEventListener("click", () => {
+				switch (item.dataset.type) {
+					case "ingredients":
+						this._filterItemsSelected.ingredients.push(item.dataset.value);
+						break;
+					case "appliance":
+						this._filterItemsSelected.appliance.push(item.dataset.value);
+						break;
+					case "ustensils":
+						this._filterItemsSelected.ustensils.push(item.dataset.value);
+						break;
+					default:
+						throw new Error("Unknown item type");
+				}
+
+				SELECTED_INGREDIENTS.innerHTML = "";
+				Object.keys(this._filterItemsSelected).forEach((key) => {
+					this._filterItemsSelected[key].forEach((item) => {
+						let li = createBlock("li", [
+							{ name: "class", value: "test" },
+							{ name: "data-value", value: item },
+						]);
+						let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "test-close" }]);
+						let span = createBlock("span");
+						span.textContent = item;
+
+						li.append(span, img);
+
+						SELECTED_INGREDIENTS.append(li);
+					});
+				});
+			});
+		});
 	}
 
 	initFiltersLists() {
@@ -91,6 +136,7 @@ class App {
 				let li = createBlock("li", [
 					{ name: "class", value: "filters__option__list__item" },
 					{ name: "data-value", value: item },
+					{ name: "data-type", value: type },
 				]);
 				li.textContent = item;
 
