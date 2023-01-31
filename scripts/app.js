@@ -107,10 +107,10 @@ class App {
 				Object.keys(this._filterItemsSelected).forEach((key) => {
 					this._filterItemsSelected[key].forEach((item) => {
 						let li = createBlock("li", [
-							{ name: "class", value: "test" },
+							{ name: "class", value: "selected-filters__list__item" },
 							{ name: "data-value", value: item },
 						]);
-						let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "test-close" }]);
+						let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "selected-filters__list__close" }]);
 						let span = createBlock("span");
 
 						span.textContent = item;
@@ -120,12 +120,15 @@ class App {
 
 						switch (key) {
 							case "ingredients":
+								SELECTED_INGREDIENTS.classList.add("visible");
 								SELECTED_INGREDIENTS.append(li);
 								break;
 							case "appliance":
+								SELECTED_APPLIANCE.classList.add("visible");
 								SELECTED_APPLIANCE.append(li);
 								break;
 							case "ustensils":
+								SELECTED_UTENSILS.classList.add("visible");
 								SELECTED_UTENSILS.append(li);
 								break;
 							default:

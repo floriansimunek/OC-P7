@@ -59,9 +59,12 @@ header h1 {
 }
 .selected-filters__list {
   list-style: none;
-  display: flex;
+  display: none;
   gap: 10px;
   margin: 10px 0;
+}
+.selected-filters__list.visible {
+  display: flex;
 }
 .selected-filters__list li {
   color: #fff;

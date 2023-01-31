@@ -63,9 +63,13 @@ header {
 
 	&__list {
 		list-style: none;
-		display: flex;
+		display: none;
 		gap: 10px;
 		margin: 10px 0;
+
+		&.visible {
+			display: flex;
+		}
 
 		li {
 			color: #fff;
