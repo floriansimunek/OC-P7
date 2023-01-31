@@ -586,7 +586,7 @@ const recipes = [
 				unit: "tiges",
 			},
 			{
-				ingredient: "huile d'olives",
+				ingredient: "huile d'olive",
 				quantity: 2,
 				unit: "cuillère à soupe",
 			},
@@ -935,7 +935,7 @@ const recipes = [
 				quantity: 1,
 			},
 			{
-				ingredient: "Huile d'olives",
+				ingredient: "Huile d'olive",
 			},
 			{
 				ingredient: "Oignon",
@@ -1318,7 +1318,7 @@ const recipes = [
 				unit: "grammes",
 			},
 			{
-				ingredient: "Huile d'olives",
+				ingredient: "Huile d'olive",
 				quantity: 25,
 				unit: "cl",
 			},
@@ -1327,7 +1327,7 @@ const recipes = [
 				quantity: 1,
 			},
 			{
-				ingredient: "Coulis de tomates",
+				ingredient: "Coulis de tomate",
 				quantity: 20,
 				unit: "cl",
 			},
@@ -1712,7 +1712,7 @@ const recipes = [
 				quantity: 2,
 			},
 			{
-				ingredient: "Kiwis",
+				ingredient: "Kiwi",
 				quantity: 3,
 			},
 			{
