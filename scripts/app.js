@@ -88,7 +88,10 @@ class App {
 			let items = getList(type);
 
 			items.forEach((item) => {
-				let li = document.createElement("li");
+				let li = createBlock("li", [
+					{ name: "class", value: "filters__option__list__item" },
+					{ name: "data-value", value: item },
+				]);
 				li.textContent = item;
 
 				lists[type].append(li);
