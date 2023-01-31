@@ -100,10 +100,10 @@ class App {
 
 			that._Recipes.forEach((recipe) => {
 				if (type === "appliance") {
-					list.push(recipe[type]);
+					list.push(recipe[type].toLowerCase());
 				} else {
 					recipe[type].forEach((item) => {
-						list.push(type === "ustensils" ? item : item["ingredient"]);
+						list.push(type === "ustensils" ? item.toLowerCase() : item["ingredient"].toLowerCase());
 					});
 				}
 			});

@@ -102,7 +102,7 @@ header h1 {
   background-color: #3282f7;
 }
 .filters__input#ingredients.open {
-  width: 65vw;
+  width: 70vw;
 }
 .filters__input#devices {
   background-color: #68d9a4;
@@ -121,7 +121,6 @@ header h1 {
   position: absolute;
   border-radius: 0 0 5px 5px;
   width: 100%;
-  height: 600px;
   padding: 20px;
 }
 .filters__option.open {
@@ -140,7 +139,22 @@ header h1 {
 .filters__option__list li {
   color: #fff;
   flex-basis: 5%;
-  width: 18%;
+  font-size: 18px;
+}
+.filters__option__list li::first-letter {
+  text-transform: capitalize;
+}
+.filters__option__ingredients {
+  height: 600px;
+}
+.filters__option__ingredients__list li {
+  width: 16%;
+}
+.filters__option__devices {
+  height: 300px;
+}
+.filters__option__devices__list li {
+  width: 100%;
 }
 .filters__option__ingredients {
   background-color: #3282f7;

@@ -395,7 +395,7 @@ const recipes = [
 				unit: "tranches",
 			},
 			{
-				ingredient: "Pommes",
+				ingredient: "Pomme",
 				quantity: 1,
 			},
 			{
@@ -425,7 +425,7 @@ const recipes = [
 				unit: "grammes",
 			},
 			{
-				ingredient: "Pommes",
+				ingredient: "Pomme",
 				quantity: 8,
 			},
 			{
