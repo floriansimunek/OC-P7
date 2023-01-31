@@ -95,11 +95,14 @@ header h1 {
 .filters__input.expanded {
   width: 340px;
 }
+.filters__input.open {
+  border-radius: 5px 5px 0 0;
+}
 .filters__input#ingredients {
   background-color: #3282f7;
 }
 .filters__input#ingredients.open {
-  width: 60vw;
+  width: 65vw;
 }
 .filters__input#devices {
   background-color: #68d9a4;
@@ -115,9 +118,29 @@ header h1 {
 }
 .filters__option {
   display: none;
+  position: absolute;
+  border-radius: 0 0 5px 5px;
+  width: 100%;
+  height: 700px;
+  padding: 20px;
 }
 .filters__option.open {
   display: flex;
+}
+.filters__option__list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  list-style: none;
+}
+.filters__option__list li {
+  color: #fff;
+  flex-basis: 5%;
+  width: 18%;
 }
 .filters__option__ingredients {
   background-color: #3282f7;
