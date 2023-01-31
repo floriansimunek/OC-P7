@@ -61,12 +61,12 @@ header h1 {
   list-style: none;
   display: flex;
   gap: 10px;
+  margin: 10px 0;
 }
 .selected-filters__list li {
   color: #fff;
   font-size: 16px;
   font-weight: bold;
-  background-color: #3282f7;
   padding: 10px 20px;
   border-radius: 5px;
   display: flex;
@@ -76,6 +76,18 @@ header h1 {
 }
 .selected-filters__list li span::first-letter {
   text-transform: capitalize;
+}
+.selected-filters__list li img:hover {
+  cursor: pointer;
+}
+.selected-filters__list__ingredients li {
+  background-color: #3282f7;
+}
+.selected-filters__list__appliance li {
+  background-color: #68d9a4;
+}
+.selected-filters__list__utensils li {
+  background-color: #ed6454;
 }
 
 /* FILTERS */

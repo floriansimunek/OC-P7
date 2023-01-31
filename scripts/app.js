@@ -81,9 +81,9 @@ class App {
 
 		this.initFiltersLists();
 
-		const SELECTED_INGREDIENTS = document.querySelector(".selected-filters__ingredients");
-		const SELECTED_APPLIANCE = document.querySelector(".selected-filters__appliance");
-		const SELECTED_UTENSILS = document.querySelector(".selected-filters__utensils");
+		const SELECTED_INGREDIENTS = document.querySelector(".selected-filters__list__ingredients");
+		const SELECTED_APPLIANCE = document.querySelector(".selected-filters__list__appliance");
+		const SELECTED_UTENSILS = document.querySelector(".selected-filters__list__utensils");
 
 		document.querySelectorAll(".filters__option__list__item").forEach((item) => {
 			item.addEventListener("click", () => {
@@ -102,6 +102,8 @@ class App {
 				}
 
 				SELECTED_INGREDIENTS.innerHTML = "";
+				SELECTED_APPLIANCE.innerHTML = "";
+				SELECTED_UTENSILS.innerHTML = "";
 				Object.keys(this._filterItemsSelected).forEach((key) => {
 					this._filterItemsSelected[key].forEach((item) => {
 						let li = createBlock("li", [
@@ -110,11 +112,26 @@ class App {
 						]);
 						let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "test-close" }]);
 						let span = createBlock("span");
-						span.textContent = item;
 
+						span.textContent = item;
 						li.append(span, img);
 
-						SELECTED_INGREDIENTS.append(li);
+						console.log(this._filterItemsSelected[key]);
+
+						switch (key) {
+							case "ingredients":
+								SELECTED_INGREDIENTS.append(li);
+								break;
+							case "appliance":
+								SELECTED_APPLIANCE.append(li);
+								break;
+							case "ustensils":
+								SELECTED_UTENSILS.append(li);
+								break;
+							default:
+								throw new Error("Unknown filter option type");
+								break;
+						}
 					});
 				});
 			});

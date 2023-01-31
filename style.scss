@@ -65,12 +65,12 @@ header {
 		list-style: none;
 		display: flex;
 		gap: 10px;
+		margin: 10px 0;
 
 		li {
 			color: #fff;
 			font-size: 16px;
 			font-weight: bold;
-			background-color: #3282f7;
 			padding: 10px 20px;
 			border-radius: 5px;
 			display: flex;
@@ -80,6 +80,30 @@ header {
 
 			& span::first-letter {
 				text-transform: capitalize;
+			}
+
+			img {
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+
+		&__ingredients {
+			li {
+				background-color: #3282f7;
+			}
+		}
+
+		&__appliance {
+			li {
+				background-color: #68d9a4;
+			}
+		}
+
+		&__utensils {
+			li {
+				background-color: #ed6454;
 			}
 		}
 	}
