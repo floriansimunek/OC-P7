@@ -1051,8 +1051,7 @@ const recipes = [
 			},
 		],
 		time: 30,
-		description:
-			"Prendre les pois chiches, les mettre dans le mixer avec de l'huile d'olive, ajouter le jus des 2 citrons et du paprika selon le gout.",
+		description: "Prendre les pois chiches, les mettre dans le mixer avec de l'huile d'olive, ajouter le jus des 2 citrons et du paprika selon le gout.",
 		appliance: "Mixer",
 		ustensils: ["cuillère en bois", "presse citron"],
 	},
@@ -1370,8 +1369,7 @@ const recipes = [
 			},
 		],
 		time: 20,
-		description:
-			"Fouettez les oeufs, le sucre et le lait. tremper les tranches de pain. Le cuire au four pendant environ 10 minutes à 180°. Servir",
+		description: "Fouettez les oeufs, le sucre et le lait. tremper les tranches de pain. Le cuire au four pendant environ 10 minutes à 180°. Servir",
 		appliance: "Four",
 		ustensils: ["fouet", "bol", "Cuillère à Soupe"],
 	},
@@ -1710,7 +1708,7 @@ const recipes = [
 		servings: 4,
 		ingredients: [
 			{
-				ingredient: "Bananes",
+				ingredient: "Banane",
 				quantity: 2,
 			},
 			{
@@ -1733,8 +1731,7 @@ const recipes = [
 			},
 		],
 		time: 0,
-		description:
-			"Découper les fruits. Le passer au blender jusqu'à obtenir une texture liquide. Mettre au frais. Servir",
+		description: "Découper les fruits. Le passer au blender jusqu'à obtenir une texture liquide. Mettre au frais. Servir",
 		appliance: "Blender",
 		ustensils: ["couteau", "verres"],
 	},

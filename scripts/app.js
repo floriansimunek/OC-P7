@@ -19,7 +19,7 @@ class App {
 
 	initSearchBar() {
 		this._searchBar.addEventListener("input", (e) => {
-			let inputValue = input.value.toLowerCase().trim();
+			let inputValue = this._searchBar.value.toLowerCase().trim();
 			const MIN_INPUT_LENGTH = 3;
 
 			this._Recipes.forEach((recipe) => {
