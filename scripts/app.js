@@ -29,10 +29,9 @@ class App {
 			let inputValue = e.target.value;
 
 			this._Recipes.forEach((recipe) => {
-				const FILTER = this.recipeFilter(recipe, inputValue);
 				let card = document.querySelector("#recipe_" + recipe.id);
 
-				if (inputValue.length >= MIN_INPUT_LENGTH && FILTER) {
+				if (inputValue.length >= MIN_INPUT_LENGTH && this.recipeFilter(recipe, inputValue)) {
 					this.showElement(card);
 				} else if (inputValue.length < MIN_INPUT_LENGTH) {
 					this.showElement(card);
