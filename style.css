@@ -194,6 +194,10 @@ header h1 {
 .filters__option__list__item::first-letter {
   text-transform: capitalize;
 }
+.filters__option__list__item.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
 .filters__option__ingredients {
   height: 600px;
 }

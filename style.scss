@@ -231,6 +231,11 @@ header {
 				&::first-letter {
 					text-transform: capitalize;
 				}
+
+				&.disabled {
+					pointer-events: none;
+					opacity: 0.6;
+				}
 			}
 		}
 
