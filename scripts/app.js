@@ -12,7 +12,7 @@ class App {
 		};
 	}
 
-	async init() {
+	init() {
 		this._data.forEach((recipe, i) => {
 			this._Recipes.push(new Recipe(recipe));
 			this._Recipes[i].createCardDOM();
@@ -32,6 +32,7 @@ class App {
 				const FILTER_NAME = this.removeAccents(recipe.name).toLowerCase().trim().includes(this.removeAccents(inputValue));
 				const FILTER_DESCRIPTION = this.removeAccents(recipe.description).toLowerCase().trim().includes(inputValue);
 				const FILTER_INGREDIENTS = recipe.ingredients.some((item) => this.removeAccents(item.ingredient).toLowerCase().trim().includes(inputValue));
+
 				let card = document.querySelector("#recipe_" + recipe.id);
 
 				if (inputValue.length >= MIN_INPUT_LENGTH) {
@@ -69,6 +70,7 @@ class App {
 				input.value = "";
 				input.classList.toggle("open");
 				FILTER_LIST.classList.toggle("open");
+				inputArrow.classList.toggle("open");
 			});
 
 			inputArrow.addEventListener("blur", () => {
@@ -76,7 +78,8 @@ class App {
 				setTimeout(() => {
 					input.classList.toggle("open");
 					FILTER_LIST.classList.toggle("open");
-				}, 200);
+					inputArrow.classList.toggle("open");
+				}, 100);
 			});
 		});
 
