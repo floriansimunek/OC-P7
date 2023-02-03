@@ -43,6 +43,18 @@ class Recipe {
 		return this._ustensils;
 	}
 
+	nameContains(str) {
+		return this.clear(this.name).includes(this.clear(str));
+	}
+
+	descriptionContains(str) {
+		return this.clear(this.description).includes(this.clear(str));
+	}
+
+	hasIngredient(str) {
+		return this.ingredients.some((item) => this.clear(item.ingredient).includes(this.clear(str)));
+	}
+
 	createCardDOM() {
 		if (this.recipesWrapper) {
 			const article = createBlock("article", [
@@ -88,5 +100,13 @@ class Recipe {
 			article.append(header, footer);
 			this.recipesWrapper.append(article);
 		}
+	}
+
+	clear(str) {
+		return this.removeAccents(str).toLowerCase().trim();
+	}
+
+	removeAccents(str) {
+		return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 	}
 }
