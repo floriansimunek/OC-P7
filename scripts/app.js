@@ -47,6 +47,8 @@ class App {
 	}
 
 	initFiltersInputs() {
+		this.initFiltersLists();
+
 		const INPUTS = document.querySelectorAll(".filters__input");
 
 		INPUTS.forEach((input) => {
@@ -81,8 +83,6 @@ class App {
 			});
 		});
 
-		this.initFiltersLists();
-
 		const SELECTED_INGREDIENTS = document.querySelector(".selected-filters__list__ingredients");
 		const SELECTED_APPLIANCE = document.querySelector(".selected-filters__list__appliance");
 		const SELECTED_UTENSILS = document.querySelector(".selected-filters__list__utensils");
@@ -109,7 +109,8 @@ class App {
 				SELECTED_INGREDIENTS.innerHTML = "";
 				SELECTED_APPLIANCE.innerHTML = "";
 				SELECTED_UTENSILS.innerHTML = "";
-				Object.keys(this._filterItemsSelected).forEach((key) => {
+
+				for (let key in this._filterItemsSelected) {
 					this._filterItemsSelected[key].forEach((item) => {
 						let li = createBlock("li", [
 							{ name: "class", value: "selected-filters__list__item" },
@@ -136,10 +137,9 @@ class App {
 								break;
 							default:
 								throw new Error("Unknown filter option type");
-								break;
 						}
 					});
-				});
+				}
 			});
 		});
 	}
@@ -152,7 +152,7 @@ class App {
 			ustensils: document.querySelector(".filters__option__utensils__list"),
 		};
 
-		Object.keys(lists).forEach((type) => {
+		for (let type in lists) {
 			let items = getList(type);
 
 			items.forEach((item) => {
@@ -165,18 +165,28 @@ class App {
 
 				lists[type].append(li);
 			});
-		});
+		}
 
 		function getList(type) {
 			let list = [];
 
 			that._Recipes.forEach((recipe) => {
-				if (type === "appliance") {
-					list.push(recipe[type].toLowerCase());
-				} else {
-					recipe[type].forEach((item) => {
-						list.push(type === "ustensils" ? item.toLowerCase() : item["ingredient"].toLowerCase());
-					});
+				switch (type) {
+					case "ingredients":
+						recipe[type].forEach((item) => {
+							list.push(item["ingredient"].toLowerCase());
+						});
+						break;
+					case "appliance":
+						list.push(recipe[type].toLowerCase());
+						break;
+					case "ustensils":
+						recipe[type].forEach((item) => {
+							list.push(item.toLowerCase());
+						});
+						break;
+					default:
+						throw new Error("Unknown filter option type");
 				}
 			});
 
