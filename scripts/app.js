@@ -23,9 +23,10 @@ class App {
 	}
 
 	initSearchBar() {
-		this._searchBar.addEventListener("input", (e) => {
+		const MIN_INPUT_LENGTH = 3;
+
+		this._searchBar.addEventListener("input", () => {
 			let inputValue = this._searchBar.value.toLowerCase().trim();
-			const MIN_INPUT_LENGTH = 3;
 
 			this._Recipes.forEach((recipe) => {
 				const FILTER_NAME = this.removeAccents(recipe.name).toLowerCase().trim().includes(this.removeAccents(inputValue));
@@ -71,8 +72,8 @@ class App {
 			});
 
 			inputArrow.addEventListener("blur", () => {
+				input.value = defaultValue;
 				setTimeout(() => {
-					input.value = defaultValue;
 					input.classList.toggle("open");
 					FILTER_LIST.classList.toggle("open");
 				}, 200);
@@ -120,15 +121,15 @@ class App {
 
 						switch (key) {
 							case "ingredients":
-								SELECTED_INGREDIENTS.classList.add("visible");
+								SELECTED_INGREDIENTS.classList.add("show");
 								SELECTED_INGREDIENTS.append(li);
 								break;
 							case "appliance":
-								SELECTED_APPLIANCE.classList.add("visible");
+								SELECTED_APPLIANCE.classList.add("show");
 								SELECTED_APPLIANCE.append(li);
 								break;
 							case "ustensils":
-								SELECTED_UTENSILS.classList.add("visible");
+								SELECTED_UTENSILS.classList.add("show");
 								SELECTED_UTENSILS.append(li);
 								break;
 							default:

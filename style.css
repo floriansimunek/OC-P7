@@ -63,7 +63,7 @@ header h1 {
   gap: 10px;
   margin: 10px 0;
 }
-.selected-filters__list.visible {
+.selected-filters__list.show {
   display: flex;
 }
 .selected-filters__list li {
