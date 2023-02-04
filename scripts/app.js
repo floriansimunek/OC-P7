@@ -148,27 +148,15 @@ class App {
 
 		options.forEach((option) => {
 			option.addEventListener("click", () => {
-				switch (option.dataset.type) {
-					case "ingredients":
-						option.classList.add("disabled");
-						this._optionsSelected.ingredients.push(option.dataset.value);
-						this.refreshOptionsListsDisplay();
-						break;
-					case "appliance":
-						option.classList.add("disabled");
-						this._optionsSelected.appliance.push(option.dataset.value);
-						this.refreshOptionsListsDisplay();
-						break;
-					case "ustensils":
-						option.classList.add("disabled");
-						this._optionsSelected.ustensils.push(option.dataset.value);
-						this.refreshOptionsListsDisplay();
-						break;
-					default:
-						throw new Error("Unknown option type");
-				}
+				addOptionToSelected(this, option);
 			});
 		});
+
+		function addOptionToSelected(that, option) {
+			option.classList.add("disabled");
+			that._optionsSelected[option.dataset.type].push(option.dataset.value);
+			that.refreshOptionsListsDisplay();
+		}
 	}
 
 	refreshOptionsListsDisplay() {
