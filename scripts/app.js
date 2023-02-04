@@ -161,9 +161,8 @@ class App {
 	}
 
 	refreshOptionsListsDisplay() {
-		resetSelectedFilters();
-
 		const that = this;
+		resetSelectedFilters();
 
 		for (let type in this._optionsSelected) {
 			if (this._optionsSelected[type].length > 0) {
@@ -199,44 +198,27 @@ class App {
 	}
 
 	initCloseFilterItems() {
+		const that = this;
 		const items = document.querySelectorAll(".selected-filters__list__item");
 
 		items.forEach((item) => {
 			const close = item.querySelector(".selected-filters__list__close");
 
 			close.addEventListener("click", () => {
-				const options = document.querySelectorAll(".filters__option__list__item");
-
-				switch (item.dataset.type) {
-					case "ingredients":
-						this._optionsSelected.ingredients = this._optionsSelected.ingredients.filter((option) => option !== item.dataset.value);
-						if (this._optionsSelected.ingredients.length == 0) this._selectedFiltersLists.ingredients.classList.remove("show");
-						options.forEach((option) => {
-							if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
-						});
-						this.refreshOptionsListsDisplay();
-						break;
-					case "appliance":
-						this._optionsSelected.appliance = this._optionsSelected.appliance.filter((option) => option !== item.dataset.value);
-						if (this._optionsSelected.appliance.length == 0) this._selectedFiltersLists.appliance.classList.remove("show");
-						options.forEach((option) => {
-							if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
-						});
-						this.refreshOptionsListsDisplay();
-						break;
-					case "ustensils":
-						this._optionsSelected.ustensils = this._optionsSelected.ustensils.filter((option) => option !== item.dataset.value);
-						if (this._optionsSelected.ustensils.length == 0) this._selectedFiltersLists.ustensils.classList.remove("show");
-						options.forEach((option) => {
-							if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
-						});
-						this.refreshOptionsListsDisplay();
-						break;
-					default:
-						throw new Error("Unknown type");
-				}
+				closeItem(item);
 			});
 		});
+
+		function closeItem(item) {
+			const options = document.querySelectorAll(".filters__option__list__item");
+
+			that._optionsSelected[item.dataset.type] = that._optionsSelected[item.dataset.type].filter((option) => option !== item.dataset.value);
+			if (that._optionsSelected[item.dataset.type].length == 0) that._selectedFiltersLists[item.dataset.type].classList.remove("show");
+			options.forEach((option) => {
+				if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
+			});
+			that.refreshOptionsListsDisplay();
+		}
 	}
 }
 
