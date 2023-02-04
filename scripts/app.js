@@ -94,7 +94,7 @@ class App {
 	}
 
 	initFiltersLists() {
-		let that = this;
+		const that = this;
 		let lists = {
 			ingredients: document.querySelector(".filters__option__ingredients__list"),
 			appliance: document.querySelector(".filters__option__devices__list"),
@@ -144,15 +144,16 @@ class App {
 	}
 
 	initSelectedFilter() {
+		const that = this;
 		const options = document.querySelectorAll(".filters__option__list__item");
 
 		options.forEach((option) => {
 			option.addEventListener("click", () => {
-				addOptionToSelected(this, option);
+				addOptionToSelected(option);
 			});
 		});
 
-		function addOptionToSelected(that, option) {
+		function addOptionToSelected(option) {
 			option.classList.add("disabled");
 			that._optionsSelected[option.dataset.type].push(option.dataset.value);
 			that.refreshOptionsListsDisplay();
@@ -160,49 +161,41 @@ class App {
 	}
 
 	refreshOptionsListsDisplay() {
-		this.resetSelectedFilters();
+		resetSelectedFilters();
+
+		const that = this;
 
 		for (let type in this._optionsSelected) {
 			if (this._optionsSelected[type].length > 0) {
 				this._optionsSelected[type].forEach((item) => {
-					let li = createBlock("li", [
-						{ name: "class", value: "selected-filters__list__item" },
-						{ name: "data-value", value: item },
-						{ name: "data-type", value: type },
-					]);
-					let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "selected-filters__list__close" }]);
-					let span = createBlock("span");
-
-					span.textContent = item;
-					li.append(span, img);
-
-					switch (type) {
-						case "ingredients":
-							this._selectedFiltersLists.ingredients.classList.add("show");
-							this._selectedFiltersLists.ingredients.append(li);
-							break;
-						case "appliance":
-							this._selectedFiltersLists.appliance.classList.add("show");
-							this._selectedFiltersLists.appliance.append(li);
-							break;
-						case "ustensils":
-							this._selectedFiltersLists.ustensils.classList.add("show");
-							this._selectedFiltersLists.ustensils.append(li);
-							break;
-						default:
-							throw new Error("Unknown filter option type");
-					}
+					displayOptionsList(type, item);
 				});
 			}
 		}
 
-		this.initCloseFilterItems();
-	}
+		function displayOptionsList(type, item) {
+			let li = createBlock("li", [
+				{ name: "class", value: "selected-filters__list__item" },
+				{ name: "data-value", value: item },
+				{ name: "data-type", value: type },
+			]);
+			let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "selected-filters__list__close" }]);
+			let span = createBlock("span");
 
-	resetSelectedFilters() {
-		for (let key in this._selectedFiltersLists) {
-			this._selectedFiltersLists[key].innerHTML = "";
+			span.textContent = item;
+			li.append(span, img);
+
+			that._selectedFiltersLists[type].classList.add("show");
+			that._selectedFiltersLists[type].append(li);
 		}
+
+		function resetSelectedFilters() {
+			for (let key in that._selectedFiltersLists) {
+				that._selectedFiltersLists[key].innerHTML = "";
+			}
+		}
+
+		this.initCloseFilterItems();
 	}
 
 	initCloseFilterItems() {
