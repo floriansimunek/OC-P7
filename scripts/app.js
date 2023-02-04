@@ -2,15 +2,6 @@ class App {
 	constructor() {
 		this._data = recipes;
 		this._Recipes = [];
-		this._searchBar = document.querySelector("#searchBar");
-		this._filtersBlock = document.querySelectorAll(".filters__block");
-		// this._filtersBlock = document.querySelector(".filters__block");
-		// this._filtersInputs = document.querySelectorAll(".filters__block input");
-		// this._filterItemsSelected = {
-		// 	ingredients: [],
-		// 	appliance: [],
-		// 	ustensils: [],
-		// };
 	}
 
 	init() {
@@ -20,48 +11,53 @@ class App {
 		});
 
 		this.initSearchBar();
+		this.initFiltersLists();
 		this.initFiltersInputs();
+		this.initSelectedFilter();
 	}
 
 	initSearchBar() {
+		const searchBar = document.querySelector("#searchBar");
 		const MIN_INPUT_LENGTH = 3;
 
-		this._searchBar.addEventListener("input", (e) => {
+		searchBar.addEventListener("input", (e) => {
 			let inputValue = e.target.value;
 
 			this._Recipes.forEach((recipe) => {
-				let card = document.querySelector("#recipe_" + recipe.id);
+				const card = document.querySelector("#recipe_" + recipe.id);
 
 				if (inputValue.length >= MIN_INPUT_LENGTH && this.recipeFilter(recipe, inputValue)) {
-					this.showElement(card);
+					showElement(card);
 				} else if (inputValue.length < MIN_INPUT_LENGTH) {
-					this.showElement(card);
+					showElement(card);
 				} else {
-					this.hideElement(card);
+					hideElement(card);
 				}
 			});
 		});
+
+		function showElement(element) {
+			element.classList.add("show");
+			element.classList.remove("hidden");
+		}
+
+		function hideElement(element) {
+			element.classList.remove("show");
+			element.classList.add("hidden");
+		}
 	}
 
 	recipeFilter(recipe, inputValue) {
 		return recipe.nameContains(inputValue) || recipe.descriptionContains(inputValue) || recipe.hasIngredient(inputValue);
 	}
 
-	showElement(element) {
-		element.classList.add("show");
-		element.classList.remove("hidden");
-	}
-
-	hideElement(element) {
-		element.classList.remove("show");
-		element.classList.add("hidden");
-	}
-
 	initFiltersInputs() {
-		this._filtersBlock.forEach((block) => {
-			let input = block.querySelector(".filters__input");
-			let arrowInput = block.querySelector(".filters__block__arrow");
-			let filtersList = block.querySelector(".filters__option");
+		const filtersBlock = document.querySelectorAll(".filters__block");
+
+		filtersBlock.forEach((block) => {
+			const input = block.querySelector(".filters__input");
+			const arrowInput = block.querySelector(".filters__block__arrow");
+			const filtersList = block.querySelector(".filters__option");
 
 			let defaultInputValue = input.value;
 
@@ -87,159 +83,138 @@ class App {
 		});
 	}
 
-	// initFiltersInputs() {
-	// 	this.initFiltersLists();
+	initFiltersLists() {
+		let that = this;
+		let lists = {
+			ingredients: document.querySelector(".filters__option__ingredients__list"),
+			appliance: document.querySelector(".filters__option__devices__list"),
+			ustensils: document.querySelector(".filters__option__utensils__list"),
+		};
 
-	// 	const INPUTS = document.querySelectorAll(".filters__input");
+		for (let type in lists) {
+			let items = getList(type);
 
-	// 	INPUTS.forEach((input) => {
-	// 		let defaultValue = input.value;
-	// 		let inputArrow = input.nextElementSibling;
-	// 		const FILTER_LIST = input.parentNode.parentNode.querySelector(".filters__option");
+			items.forEach((item) => {
+				let li = createBlock("li", [
+					{ name: "class", value: "filters__option__list__item" },
+					{ name: "data-value", value: item },
+					{ name: "data-type", value: type },
+				]);
+				li.textContent = item;
 
-	// 		input.addEventListener("focus", () => {
-	// 			input.value = "";
-	// 			input.classList.toggle("expanded");
-	// 		});
+				lists[type].append(li);
+			});
+		}
 
-	// 		input.addEventListener("blur", () => {
-	// 			input.value = defaultValue;
-	// 			input.classList.toggle("expanded");
-	// 		});
+		function getList(type) {
+			let list = [];
 
-	// 		inputArrow.addEventListener("focus", () => {
-	// 			input.value = "";
-	// 			input.classList.toggle("open");
-	// 			FILTER_LIST.classList.toggle("open");
-	// 			inputArrow.classList.toggle("open");
-	// 		});
+			that._Recipes.forEach((recipe) => {
+				switch (type) {
+					case "ingredients":
+						recipe[type].forEach((item) => {
+							list.push(item["ingredient"].toLowerCase());
+						});
+						break;
+					case "appliance":
+						list.push(recipe[type].toLowerCase());
+						break;
+					case "ustensils":
+						recipe[type].forEach((item) => {
+							list.push(item.toLowerCase());
+						});
+						break;
+					default:
+						throw new Error("Unknown filter option type");
+				}
+			});
 
-	// 		inputArrow.addEventListener("blur", () => {
-	// 			input.value = defaultValue;
-	// 			setTimeout(() => {
-	// 				input.classList.toggle("open");
-	// 				FILTER_LIST.classList.toggle("open");
-	// 				inputArrow.classList.toggle("open");
-	// 			}, 100);
-	// 		});
-	// 	});
+			return [...new Set(list)].sort();
+		}
+	}
 
-	// 	const SELECTED_INGREDIENTS = document.querySelector(".selected-filters__list__ingredients");
-	// 	const SELECTED_APPLIANCE = document.querySelector(".selected-filters__list__appliance");
-	// 	const SELECTED_UTENSILS = document.querySelector(".selected-filters__list__utensils");
+	initSelectedFilter() {
+		const options = document.querySelectorAll(".filters__option__list__item");
 
-	// 	document.querySelectorAll(".filters__option__list__item").forEach((item) => {
-	// 		item.addEventListener("click", () => {
-	// 			switch (item.dataset.type) {
-	// 				case "ingredients":
-	// 					item.classList.add("disabled");
-	// 					this._filterItemsSelected.ingredients.push(item.dataset.value);
-	// 					break;
-	// 				case "appliance":
-	// 					item.classList.add("disabled");
-	// 					this._filterItemsSelected.appliance.push(item.dataset.value);
-	// 					break;
-	// 				case "ustensils":
-	// 					item.classList.add("disabled");
-	// 					this._filterItemsSelected.ustensils.push(item.dataset.value);
-	// 					break;
-	// 				default:
-	// 					throw new Error("Unknown item type");
-	// 			}
+		let optionsSelected = {
+			ingredients: [],
+			appliance: [],
+			ustensils: [],
+		};
 
-	// 			SELECTED_INGREDIENTS.innerHTML = "";
-	// 			SELECTED_APPLIANCE.innerHTML = "";
-	// 			SELECTED_UTENSILS.innerHTML = "";
+		options.forEach((option) => {
+			option.addEventListener("click", () => {
+				switch (option.dataset.type) {
+					case "ingredients":
+						option.classList.add("disabled");
+						optionsSelected.ingredients.push(option.dataset.value);
+						this.refreshOptionsListsDisplay(optionsSelected);
+						break;
+					case "appliance":
+						option.classList.add("disabled");
+						optionsSelected.appliance.push(option.dataset.value);
+						this.refreshOptionsListsDisplay(optionsSelected);
+						break;
+					case "ustensils":
+						option.classList.add("disabled");
+						optionsSelected.ustensils.push(option.dataset.value);
+						this.refreshOptionsListsDisplay(optionsSelected);
+						break;
+					default:
+						throw new Error("Unknown option type");
+				}
+			});
+		});
+	}
 
-	// 			for (let key in this._filterItemsSelected) {
-	// 				this._filterItemsSelected[key].forEach((item) => {
-	// 					let li = createBlock("li", [
-	// 						{ name: "class", value: "selected-filters__list__item" },
-	// 						{ name: "data-value", value: item },
-	// 					]);
-	// 					let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "selected-filters__list__close" }]);
-	// 					let span = createBlock("span");
+	refreshOptionsListsDisplay(optionsSelected) {
+		const selectedFiltersLists = {
+			ingredients: document.querySelector(".selected-filters__list__ingredients"),
+			appliance: document.querySelector(".selected-filters__list__appliance"),
+			ustensils: document.querySelector(".selected-filters__list__utensils"),
+		};
 
-	// 					span.textContent = item;
-	// 					li.append(span, img);
+		this.resetSelectedFilters(selectedFiltersLists);
 
-	// 					switch (key) {
-	// 						case "ingredients":
-	// 							SELECTED_INGREDIENTS.classList.add("show");
-	// 							SELECTED_INGREDIENTS.append(li);
-	// 							break;
-	// 						case "appliance":
-	// 							SELECTED_APPLIANCE.classList.add("show");
-	// 							SELECTED_APPLIANCE.append(li);
-	// 							break;
-	// 						case "ustensils":
-	// 							SELECTED_UTENSILS.classList.add("show");
-	// 							SELECTED_UTENSILS.append(li);
-	// 							break;
-	// 						default:
-	// 							throw new Error("Unknown filter option type");
-	// 					}
-	// 				});
-	// 			}
+		for (let key in optionsSelected) {
+			if (optionsSelected[key].length > 0) {
+				optionsSelected[key].forEach((item) => {
+					let li = createBlock("li", [
+						{ name: "class", value: "selected-filters__list__item" },
+						{ name: "data-value", value: item },
+					]);
+					let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "selected-filters__list__close" }]);
+					let span = createBlock("span");
 
-	// 			const SELECTED_INGREDIENTS_LIST = SELECTED_INGREDIENTS.querySelectorAll("li");
-	// 			const SELECTED_APPLIANCE_LIST = SELECTED_APPLIANCE.querySelectorAll("li");
-	// 			const SELECTED_UTENSILS_LIST = SELECTED_UTENSILS.querySelectorAll("li");
+					span.textContent = item;
+					li.append(span, img);
 
-	// 			console.log(SELECTED_INGREDIENTS_LIST[0]);
-	// 		});
-	// 	});
-	// }
+					switch (key) {
+						case "ingredients":
+							selectedFiltersLists.ingredients.classList.add("show");
+							selectedFiltersLists.ingredients.append(li);
+							break;
+						case "appliance":
+							selectedFiltersLists.appliance.classList.add("show");
+							selectedFiltersLists.appliance.append(li);
+							break;
+						case "ustensils":
+							selectedFiltersLists.ustensils.classList.add("show");
+							selectedFiltersLists.ustensils.append(li);
+							break;
+						default:
+							throw new Error("Unknown filter option type");
+					}
+				});
+			}
+		}
+	}
 
-	// initFiltersLists() {
-	// 	let that = this;
-	// 	let lists = {
-	// 		ingredients: document.querySelector(".filters__option__ingredients__list"),
-	// 		appliance: document.querySelector(".filters__option__devices__list"),
-	// 		ustensils: document.querySelector(".filters__option__utensils__list"),
-	// 	};
-
-	// 	for (let type in lists) {
-	// 		let items = getList(type);
-
-	// 		items.forEach((item) => {
-	// 			let li = createBlock("li", [
-	// 				{ name: "class", value: "filters__option__list__item" },
-	// 				{ name: "data-value", value: item },
-	// 				{ name: "data-type", value: type },
-	// 			]);
-	// 			li.textContent = item;
-
-	// 			lists[type].append(li);
-	// 		});
-	// 	}
-
-	// 	function getList(type) {
-	// 		let list = [];
-
-	// 		that._Recipes.forEach((recipe) => {
-	// 			switch (type) {
-	// 				case "ingredients":
-	// 					recipe[type].forEach((item) => {
-	// 						list.push(item["ingredient"].toLowerCase());
-	// 					});
-	// 					break;
-	// 				case "appliance":
-	// 					list.push(recipe[type].toLowerCase());
-	// 					break;
-	// 				case "ustensils":
-	// 					recipe[type].forEach((item) => {
-	// 						list.push(item.toLowerCase());
-	// 					});
-	// 					break;
-	// 				default:
-	// 					throw new Error("Unknown filter option type");
-	// 			}
-	// 		});
-
-	// 		return [...new Set(list)].sort();
-	// 	}
-	// }
+	resetSelectedFilters(selectedFiltersLists) {
+		for (let key in selectedFiltersLists) {
+			selectedFiltersLists[key].innerHTML = "";
+		}
+	}
 }
 
 const app = new App();
