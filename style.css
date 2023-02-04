@@ -204,10 +204,10 @@ header h1 {
 .filters__option__ingredients__list li {
   width: 16%;
 }
-.filters__option__devices {
-  height: 300px;
-}
 .filters__option__devices__list li {
+  width: 100%;
+}
+.filters__option__utensils__list li {
   width: 100%;
 }
 .filters__option__ingredients {

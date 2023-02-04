@@ -250,8 +250,14 @@ header {
 		}
 
 		&__devices {
-			height: 300px;
+			&__list {
+				li {
+					width: 100%;
+				}
+			}
+		}
 
+		&__utensils {
 			&__list {
 				li {
 					width: 100%;
