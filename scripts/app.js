@@ -2,6 +2,16 @@ class App {
 	constructor() {
 		this._data = recipes;
 		this._Recipes = [];
+		this._optionsSelected = {
+			ingredients: [],
+			appliance: [],
+			ustensils: [],
+		};
+		this._selectedFiltersLists = {
+			ingredients: document.querySelector(".selected-filters__list__ingredients"),
+			appliance: document.querySelector(".selected-filters__list__appliance"),
+			ustensils: document.querySelector(".selected-filters__list__utensils"),
+		};
 	}
 
 	init() {
@@ -136,29 +146,23 @@ class App {
 	initSelectedFilter() {
 		const options = document.querySelectorAll(".filters__option__list__item");
 
-		let optionsSelected = {
-			ingredients: [],
-			appliance: [],
-			ustensils: [],
-		};
-
 		options.forEach((option) => {
 			option.addEventListener("click", () => {
 				switch (option.dataset.type) {
 					case "ingredients":
 						option.classList.add("disabled");
-						optionsSelected.ingredients.push(option.dataset.value);
-						this.refreshOptionsListsDisplay(optionsSelected);
+						this._optionsSelected.ingredients.push(option.dataset.value);
+						this.refreshOptionsListsDisplay();
 						break;
 					case "appliance":
 						option.classList.add("disabled");
-						optionsSelected.appliance.push(option.dataset.value);
-						this.refreshOptionsListsDisplay(optionsSelected);
+						this._optionsSelected.appliance.push(option.dataset.value);
+						this.refreshOptionsListsDisplay();
 						break;
 					case "ustensils":
 						option.classList.add("disabled");
-						optionsSelected.ustensils.push(option.dataset.value);
-						this.refreshOptionsListsDisplay(optionsSelected);
+						this._optionsSelected.ustensils.push(option.dataset.value);
+						this.refreshOptionsListsDisplay();
 						break;
 					default:
 						throw new Error("Unknown option type");
@@ -167,21 +171,16 @@ class App {
 		});
 	}
 
-	refreshOptionsListsDisplay(optionsSelected) {
-		const selectedFiltersLists = {
-			ingredients: document.querySelector(".selected-filters__list__ingredients"),
-			appliance: document.querySelector(".selected-filters__list__appliance"),
-			ustensils: document.querySelector(".selected-filters__list__utensils"),
-		};
+	refreshOptionsListsDisplay() {
+		this.resetSelectedFilters();
 
-		this.resetSelectedFilters(selectedFiltersLists);
-
-		for (let key in optionsSelected) {
-			if (optionsSelected[key].length > 0) {
-				optionsSelected[key].forEach((item) => {
+		for (let type in this._optionsSelected) {
+			if (this._optionsSelected[type].length > 0) {
+				this._optionsSelected[type].forEach((item) => {
 					let li = createBlock("li", [
 						{ name: "class", value: "selected-filters__list__item" },
 						{ name: "data-value", value: item },
+						{ name: "data-type", value: type },
 					]);
 					let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "selected-filters__list__close" }]);
 					let span = createBlock("span");
@@ -189,18 +188,18 @@ class App {
 					span.textContent = item;
 					li.append(span, img);
 
-					switch (key) {
+					switch (type) {
 						case "ingredients":
-							selectedFiltersLists.ingredients.classList.add("show");
-							selectedFiltersLists.ingredients.append(li);
+							this._selectedFiltersLists.ingredients.classList.add("show");
+							this._selectedFiltersLists.ingredients.append(li);
 							break;
 						case "appliance":
-							selectedFiltersLists.appliance.classList.add("show");
-							selectedFiltersLists.appliance.append(li);
+							this._selectedFiltersLists.appliance.classList.add("show");
+							this._selectedFiltersLists.appliance.append(li);
 							break;
 						case "ustensils":
-							selectedFiltersLists.ustensils.classList.add("show");
-							selectedFiltersLists.ustensils.append(li);
+							this._selectedFiltersLists.ustensils.classList.add("show");
+							this._selectedFiltersLists.ustensils.append(li);
 							break;
 						default:
 							throw new Error("Unknown filter option type");
@@ -208,12 +207,55 @@ class App {
 				});
 			}
 		}
+
+		this.initCloseFilterItems();
 	}
 
-	resetSelectedFilters(selectedFiltersLists) {
-		for (let key in selectedFiltersLists) {
-			selectedFiltersLists[key].innerHTML = "";
+	resetSelectedFilters() {
+		for (let key in this._selectedFiltersLists) {
+			this._selectedFiltersLists[key].innerHTML = "";
 		}
+	}
+
+	initCloseFilterItems() {
+		const items = document.querySelectorAll(".selected-filters__list__item");
+
+		items.forEach((item) => {
+			const close = item.querySelector(".selected-filters__list__close");
+
+			close.addEventListener("click", () => {
+				const options = document.querySelectorAll(".filters__option__list__item");
+
+				switch (item.dataset.type) {
+					case "ingredients":
+						this._optionsSelected.ingredients = this._optionsSelected.ingredients.filter((option) => option !== item.dataset.value);
+						if (this._optionsSelected.ingredients.length == 0) this._selectedFiltersLists.ingredients.classList.remove("show");
+						options.forEach((option) => {
+							if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
+						});
+						this.refreshOptionsListsDisplay();
+						break;
+					case "appliance":
+						this._optionsSelected.appliance = this._optionsSelected.appliance.filter((option) => option !== item.dataset.value);
+						if (this._optionsSelected.appliance.length == 0) this._selectedFiltersLists.appliance.classList.remove("show");
+						options.forEach((option) => {
+							if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
+						});
+						this.refreshOptionsListsDisplay();
+						break;
+					case "ustensils":
+						this._optionsSelected.ustensils = this._optionsSelected.ustensils.filter((option) => option !== item.dataset.value);
+						if (this._optionsSelected.ustensils.length == 0) this._selectedFiltersLists.ustensils.classList.remove("show");
+						options.forEach((option) => {
+							if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
+						});
+						this.refreshOptionsListsDisplay();
+						break;
+					default:
+						throw new Error("Unknown type");
+				}
+			});
+		});
 	}
 }
 
