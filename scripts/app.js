@@ -36,61 +36,19 @@ class App {
 			this._Recipes.forEach((recipe) => {
 				const card = document.querySelector("#recipe_" + recipe.id);
 
-				if (inputValue.length >= MIN_INPUT_LENGTH && this.recipeFilter(recipe, inputValue)) {
-					showElement(card);
+				if (inputValue.length >= MIN_INPUT_LENGTH && recipeFilter(recipe, inputValue)) {
+					this.showElement(card);
 				} else if (inputValue.length < MIN_INPUT_LENGTH) {
-					showElement(card);
+					this.showElement(card);
 				} else {
-					hideElement(card);
+					this.hideElement(card);
 				}
 			});
 		});
 
-		function showElement(element) {
-			element.classList.add("show");
-			element.classList.remove("hidden");
+		function recipeFilter(recipe, inputValue) {
+			return recipe.nameContains(inputValue) || recipe.descriptionContains(inputValue) || recipe.hasIngredient(inputValue);
 		}
-
-		function hideElement(element) {
-			element.classList.remove("show");
-			element.classList.add("hidden");
-		}
-	}
-
-	recipeFilter(recipe, inputValue) {
-		return recipe.nameContains(inputValue) || recipe.descriptionContains(inputValue) || recipe.hasIngredient(inputValue);
-	}
-
-	initFiltersInputs() {
-		const filtersBlock = document.querySelectorAll(".filters__block");
-
-		filtersBlock.forEach((block) => {
-			const input = block.querySelector(".filters__input");
-			const arrowInput = block.querySelector(".filters__block__arrow");
-			const filtersList = block.querySelector(".filters__option");
-
-			let defaultInputValue = input.value;
-
-			["focus", "blur"].forEach((event) => {
-				input.addEventListener(event, () => {
-					input.classList.toggle("expanded");
-					event === "focus" ? (input.value = "") : (input.value = defaultInputValue);
-				});
-			});
-
-			["focus", "blur"].forEach((event) => {
-				arrowInput.addEventListener(event, () => {
-					setTimeout(
-						() => {
-							input.classList.toggle("open");
-							arrowInput.classList.toggle("open");
-							filtersList.classList.toggle("open");
-						},
-						event === "focus" ? 0 : 100,
-					);
-				});
-			});
-		});
 	}
 
 	initFiltersLists() {
@@ -143,6 +101,38 @@ class App {
 		}
 	}
 
+	initFiltersInputs() {
+		const filtersBlock = document.querySelectorAll(".filters__block");
+
+		filtersBlock.forEach((block) => {
+			const input = block.querySelector(".filters__input");
+			const arrowInput = block.querySelector(".filters__block__arrow");
+			const filtersList = block.querySelector(".filters__option");
+
+			let defaultInputValue = input.value;
+
+			["focus", "blur"].forEach((event) => {
+				input.addEventListener(event, () => {
+					input.classList.toggle("expanded");
+					event === "focus" ? (input.value = "") : (input.value = defaultInputValue);
+				});
+			});
+
+			["focus", "blur"].forEach((event) => {
+				arrowInput.addEventListener(event, () => {
+					setTimeout(
+						() => {
+							input.classList.toggle("open");
+							arrowInput.classList.toggle("open");
+							filtersList.classList.toggle("open");
+						},
+						event === "focus" ? 0 : 100,
+					);
+				});
+			});
+		});
+	}
+
 	initSelectedFilter() {
 		const that = this;
 		const options = document.querySelectorAll(".filters__option__list__item");
@@ -150,6 +140,13 @@ class App {
 		options.forEach((option) => {
 			option.addEventListener("click", () => {
 				addOptionToSelected(option);
+
+				//TODO: modify
+				// if (option.dataset.type === "appliance") {
+				// 	options.forEach((option) => {
+				// 		option.classList.add("disabled");
+				// 	});
+				// }
 			});
 		});
 
@@ -157,12 +154,14 @@ class App {
 			option.classList.add("disabled");
 			that._optionsSelected[option.dataset.type].push(option.dataset.value);
 			that.refreshOptionsListsDisplay();
+			// TODO: remove ?
+			that.filterByOptions();
 		}
 	}
 
 	refreshOptionsListsDisplay() {
 		const that = this;
-		resetSelectedFilters();
+		resetSelectedFiltersLists();
 
 		for (let type in this._optionsSelected) {
 			if (this._optionsSelected[type].length > 0) {
@@ -188,7 +187,7 @@ class App {
 			that._selectedFiltersLists[type].append(li);
 		}
 
-		function resetSelectedFilters() {
+		function resetSelectedFiltersLists() {
 			for (let key in that._selectedFiltersLists) {
 				that._selectedFiltersLists[key].innerHTML = "";
 			}
@@ -216,9 +215,52 @@ class App {
 			if (that._optionsSelected[item.dataset.type].length == 0) that._selectedFiltersLists[item.dataset.type].classList.remove("show");
 			options.forEach((option) => {
 				if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
+
+				//TODO: modify
+				// if (item.dataset.type === "appliance") {
+				// 	options.forEach((option) => {
+				// 		option.classList.remove("disabled");
+				// 	});
+				// }
 			});
 			that.refreshOptionsListsDisplay();
+			// TODO: remove ?
+			that.filterByOptions();
 		}
+	}
+
+	filterByOptions() {
+		this._Recipes.forEach((recipe) => {
+			const card = document.querySelector("#recipe_" + recipe.id);
+
+			if (
+				recipe.hasIngredients(this._optionsSelected["ingredients"]) &&
+				recipe.hasAppliance(this._optionsSelected["appliance"]) &&
+				recipe.hasUstensils(this._optionsSelected["ustensils"])
+			) {
+				this.showElement(card);
+			} else {
+				this.hideElement(card);
+			}
+		});
+	}
+
+	showElement(element) {
+		element.classList.add("show");
+		element.classList.remove("hidden");
+	}
+
+	hideElement(element) {
+		element.classList.remove("show");
+		element.classList.add("hidden");
+	}
+
+	clear(str) {
+		return this.removeAccents(str).toLowerCase().trim();
+	}
+
+	removeAccents(str) {
+		return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 	}
 }
 
