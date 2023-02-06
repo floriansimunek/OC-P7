@@ -55,38 +55,12 @@ class Recipe {
 		return this.ingredients.some((item) => this.clear(item.ingredient).includes(this.clear(str)));
 	}
 
-	hasIngredients(arr) {
-		const ingr = [];
-
-		if (arr.length > 0) {
-			this._ingredients.forEach((item) => {
-				ingr.push(this.clear(item.ingredient));
-			});
-			return arr.every((value) => ingr.includes(this.clear(value)));
-		} else {
-			return true;
-		}
+	clear(str) {
+		return this.removeAccents(str).toLowerCase().trim();
 	}
 
-	hasAppliance(arr) {
-		if (arr.length > 0) {
-			return this.clear(this.appliance) === this.clear(arr[0]);
-		} else {
-			return true;
-		}
-	}
-
-	hasUstensils(arr) {
-		const ust = [];
-
-		if (arr.length > 0) {
-			this._ustensils.forEach((item) => {
-				ust.push(this.clear(item));
-			});
-			return arr.every((value) => ust.includes(this.clear(value)));
-		} else {
-			return true;
-		}
+	removeAccents(str) {
+		return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 	}
 
 	createCardDOM() {
@@ -134,13 +108,5 @@ class Recipe {
 			article.append(header, footer);
 			this.recipesWrapper.append(article);
 		}
-	}
-
-	clear(str) {
-		return this.removeAccents(str).toLowerCase().trim();
-	}
-
-	removeAccents(str) {
-		return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 	}
 }
