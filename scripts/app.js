@@ -185,6 +185,17 @@ class App {
 		}
 
 		this.initCloseFilterItems();
+		this.refreshDisabledItems();
+	}
+
+	refreshDisabledItems() {
+		const options = document.querySelectorAll(".filters__option__list__item");
+
+		["ingredients", "appliance", "ustensils"].forEach((type) => {
+			this._options[type].forEach((item) => {
+				console.log(item.disabled);
+			});
+		});
 	}
 
 	initCloseFilterItems() {
