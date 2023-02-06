@@ -139,7 +139,11 @@ class App {
 		});
 
 		function addOptionToSelected(option) {
-			option.classList.add("disabled");
+			that._options[option.dataset.type].filter((item) => {
+				if (that.clear(item.name) === that.clear(option.dataset.value)) {
+					item.disabled = true;
+				}
+			});
 			that._optionsSelected[option.dataset.type].push(option.dataset.value);
 			that.refreshOptionsListsDisplay();
 			that.filterByOptions();
