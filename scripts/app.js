@@ -2,6 +2,7 @@ class App {
 	constructor() {
 		this._data = recipes;
 		this._Recipes = [];
+		this._options = { ingredients: [], appliance: [], ustensils: [] };
 		this._optionsSelected = {
 			ingredients: [],
 			appliance: [],
@@ -58,46 +59,40 @@ class App {
 			appliance: document.querySelector(".filters__option__devices__list"),
 			ustensils: document.querySelector(".filters__option__utensils__list"),
 		};
+		let items = getList();
 
 		for (let type in lists) {
-			let items = getList(type);
-
-			items.forEach((item) => {
+			Object.values(items[type]).forEach((item) => {
 				let li = createBlock("li", [
 					{ name: "class", value: "filters__option__list__item" },
-					{ name: "data-value", value: item },
+					{ name: "data-value", value: item.name },
 					{ name: "data-type", value: type },
 				]);
-				li.textContent = item;
+				li.textContent = item.name;
 
 				lists[type].append(li);
 			});
 		}
 
-		function getList(type) {
-			let list = [];
-
+		function getList() {
 			that._Recipes.forEach((recipe) => {
-				switch (type) {
-					case "ingredients":
-						recipe[type].forEach((item) => {
-							list.push(item["ingredient"].toLowerCase());
-						});
-						break;
-					case "appliance":
-						list.push(recipe[type].toLowerCase());
-						break;
-					case "ustensils":
-						recipe[type].forEach((item) => {
-							list.push(item.toLowerCase());
-						});
-						break;
-					default:
-						throw new Error("Unknown filter option type");
-				}
+				recipe["ingredients"].forEach((item) => {
+					that._options.ingredients.push({ name: item["ingredient"].toLowerCase(), disabled: false });
+				});
+
+				that._options.appliance.push({ name: recipe["appliance"].toLowerCase(), disabled: false });
+
+				recipe["ustensils"].forEach((item) => {
+					that._options.ustensils.push({ name: item.toLowerCase(), disabled: false });
+				});
 			});
 
-			return [...new Set(list)].sort();
+			["ingredients", "appliance", "ustensils"].forEach((type) => {
+				const names = that._options[type].map((item) => item.name);
+				that._options[type] = that._options[type].filter(({ name }, index) => !names.includes(name, index + 1));
+			});
+
+			return that._options;
 		}
 	}
 
@@ -140,13 +135,6 @@ class App {
 		options.forEach((option) => {
 			option.addEventListener("click", () => {
 				addOptionToSelected(option);
-
-				//TODO: modify
-				// if (option.dataset.type === "appliance") {
-				// 	options.forEach((option) => {
-				// 		option.classList.add("disabled");
-				// 	});
-				// }
 			});
 		});
 
@@ -154,7 +142,6 @@ class App {
 			option.classList.add("disabled");
 			that._optionsSelected[option.dataset.type].push(option.dataset.value);
 			that.refreshOptionsListsDisplay();
-			// TODO: remove ?
 			that.filterByOptions();
 		}
 	}
@@ -212,19 +199,14 @@ class App {
 			const options = document.querySelectorAll(".filters__option__list__item");
 
 			that._optionsSelected[item.dataset.type] = that._optionsSelected[item.dataset.type].filter((option) => option !== item.dataset.value);
+
 			if (that._optionsSelected[item.dataset.type].length == 0) that._selectedFiltersLists[item.dataset.type].classList.remove("show");
+
 			options.forEach((option) => {
 				if (option.dataset.value === item.dataset.value) option.classList.remove("disabled");
-
-				//TODO: modify
-				// if (item.dataset.type === "appliance") {
-				// 	options.forEach((option) => {
-				// 		option.classList.remove("disabled");
-				// 	});
-				// }
 			});
+
 			that.refreshOptionsListsDisplay();
-			// TODO: remove ?
 			that.filterByOptions();
 		}
 	}
