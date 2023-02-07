@@ -3,11 +3,18 @@ class App {
 		this._data = recipes;
 		this._Recipes = [];
 		this._optionsLists = { ingredients: [], appliance: [], ustensils: [] };
+		this._selectedOptions = { ingredients: [], appliance: [], ustensils: [] };
 		this._optionsListsElements = {
 			ingredients: document.querySelector(".filters__option__ingredients__list"),
 			appliance: document.querySelector(".filters__option__devices__list"),
 			ustensils: document.querySelector(".filters__option__utensils__list"),
 		};
+		this._selectedOptionsListsElements = {
+			ingredients: document.querySelector(".selected-filters__list__ingredients"),
+			appliance: document.querySelector(".selected-filters__list__appliance"),
+			ustensils: document.querySelector(".selected-filters__list__utensils"),
+		};
+		this._optionsElements = [];
 	}
 
 	init() {
@@ -16,11 +23,11 @@ class App {
 			this._Recipes[i].createCardDOM();
 		});
 
-		this.initOptionsLists();
+		this.initOptions();
 		this.initSearchBar();
 	}
 
-	initOptionsLists() {
+	initOptions() {
 		this._Recipes.forEach((recipe) => {
 			recipe.ingredients.forEach((item) => {
 				this._optionsLists.ingredients.push({ name: clear(item.ingredient), selected: false, disabled: false });
@@ -33,13 +40,13 @@ class App {
 			});
 		});
 
+		//TODO: Sort by name
 		// Remove duplicates in optionsLists Arrays
 		for (let type in this._optionsLists) {
 			this._optionsLists[type] = [...new Map(this._optionsLists[type].map((item) => [item.name, item])).values()];
 		}
 
 		this.initFiltersInputs();
-		this.appendOptionsToLists();
 	}
 
 	initFiltersInputs() {
@@ -72,6 +79,8 @@ class App {
 				});
 			});
 		});
+
+		this.appendOptionsToLists();
 	}
 
 	appendOptionsToLists() {
@@ -81,13 +90,73 @@ class App {
 					{ name: "class", value: "filters__option__list__item" },
 					{ name: "data-value", value: option.name },
 					{ name: "data-type", value: type },
-					{ name: "data-disabled", value: option.disabled },
-					{ name: "data-selected", value: option.selected },
 				]);
 				li.textContent = option.name;
 
 				this._optionsListsElements[type].append(li);
 			});
+		}
+
+		this.initEventsToOptions();
+	}
+
+	initEventsToOptions() {
+		this._optionsElements = document.querySelectorAll(".filters__option__list__item");
+
+		this._optionsElements.forEach((option) => {
+			option.addEventListener("click", () => {
+				let clickedItem = this._optionsLists[option.dataset.type].filter((item) => clear(item.name) === clear(option.dataset.value));
+				this._optionsLists[option.dataset.type].map(() => {
+					clickedItem[0].selected = true;
+					clickedItem[0].disabled = true;
+				});
+
+				this.refreshOptionsDisplay();
+			});
+		});
+	}
+
+	refreshOptionsDisplay() {
+		for (let type in this._optionsLists) {
+			this._optionsLists[type].forEach((option) => {
+				if (option.disabled) {
+					const optionDOM = document.querySelector(`li[data-value="${option.name}"]`);
+					optionDOM.classList.add("disabled");
+				}
+
+				if (option.selected) {
+					this._selectedOptions[type].push(option);
+					this._selectedOptions[type] = [...new Map(this._selectedOptions[type].map((item) => [item.name, item])).values()];
+				}
+			});
+		}
+
+		this.refreshSelectedOptions();
+	}
+
+	refreshSelectedOptions() {
+		for (let type in this._selectedOptionsListsElements) {
+			this._selectedOptionsListsElements[type].innerHTML = "";
+		}
+
+		for (let type in this._selectedOptions) {
+			if (this._selectedOptions[type].length > 0) {
+				this._selectedOptions[type].forEach((selectedOption) => {
+					let li = createBlock("li", [
+						{ name: "class", value: "selected-filters__list__item" },
+						{ name: "data-value", value: selectedOption.name },
+						{ name: "data-type", value: type },
+					]);
+					let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "selected-filters__list__close" }]);
+					let span = createBlock("span");
+
+					span.textContent = selectedOption.name;
+					li.append(span, img);
+
+					this._selectedOptionsListsElements[type].classList.add("show");
+					this._selectedOptionsListsElements[type].append(li);
+				});
+			}
 		}
 	}
 
