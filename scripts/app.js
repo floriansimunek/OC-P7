@@ -3,6 +3,11 @@ class App {
 		this._data = recipes;
 		this._Recipes = [];
 		this._optionsLists = { ingredients: [], appliance: [], ustensils: [] };
+		this._optionsListsElements = {
+			ingredients: document.querySelector(".filters__option__ingredients__list"),
+			appliance: document.querySelector(".filters__option__devices__list"),
+			ustensils: document.querySelector(".filters__option__utensils__list"),
+		};
 	}
 
 	init() {
@@ -31,6 +36,25 @@ class App {
 		// Remove duplicates in optionsLists Arrays
 		for (let type in this._optionsLists) {
 			this._optionsLists[type] = [...new Map(this._optionsLists[type].map((item) => [item.name, item])).values()];
+		}
+
+		this.appendOptionsToLists();
+	}
+
+	appendOptionsToLists() {
+		for (let type in this._optionsListsElements) {
+			this._optionsLists[type].forEach((option) => {
+				let li = createBlock("li", [
+					{ name: "class", value: "filters__option__list__item" },
+					{ name: "data-value", value: option.name },
+					{ name: "data-type", value: type },
+					{ name: "data-disabled", value: option.disabled },
+					{ name: "data-selected", value: option.selected },
+				]);
+				li.textContent = option.name;
+
+				this._optionsListsElements[type].append(li);
+			});
 		}
 	}
 
