@@ -106,6 +106,7 @@ class App {
 		}
 
 		this.refreshSelectedOptions();
+		this.filterByOptions();
 	}
 
 	refreshSelectedOptions() {
@@ -151,6 +152,31 @@ class App {
 
 				this.refreshOptionsDisplay();
 			});
+		});
+	}
+
+	filterByOptions() {
+		this._Recipes.forEach((recipe) => {
+			const card = document.querySelector("#recipe_" + recipe.id);
+
+			recipe.hasAppliance(this._selectedOptionsLists["ustensils"]);
+			if (
+				recipe.hasIngredients(this._selectedOptionsLists["ingredients"]) &&
+				recipe.hasAppliance(this._selectedOptionsLists["appliance"]) &&
+				recipe.hasUstensils(this._selectedOptionsLists["ustensils"])
+			) {
+				this.showElement(card);
+			} else {
+				this.hideElement(card);
+			}
+
+			if (
+				this._selectedOptionsLists.ingredients.length == 0 &&
+				this._selectedOptionsLists.appliance.length == 0 &&
+				this._selectedOptionsLists.ustensils.length == 0
+			) {
+				this.showElement(card);
+			}
 		});
 	}
 

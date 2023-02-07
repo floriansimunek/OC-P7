@@ -55,6 +55,47 @@ class Recipe {
 		return this.ingredients.some((item) => clear(item.ingredient).includes(clear(str)));
 	}
 
+	hasIngredients(arr) {
+		let ingredients = [];
+		let finded = [];
+
+		if (arr.length > 0) {
+			this.ingredients.forEach((item) => {
+				ingredients.push(clear(item.ingredient));
+			});
+
+			arr.forEach((option) => {
+				finded = ingredients.filter((item) => clear(item) === clear(option));
+			});
+
+			return finded.length > 0 ? true : false;
+		} else {
+			return true;
+		}
+	}
+
+	hasAppliance(arr) {
+		if (arr.length > 0) {
+			return clear(this.appliance) === clear(arr[0]);
+		} else {
+			return true;
+		}
+	}
+
+	hasUstensils(arr) {
+		let finded = [];
+
+		if (arr.length > 0) {
+			arr.forEach((option) => {
+				finded = this.ustensils.filter((item) => clear(item) === clear(option));
+			});
+
+			return finded.length > 0 ? true : false;
+		} else {
+			return true;
+		}
+	}
+
 	createCardDOM() {
 		if (this.recipesWrapper) {
 			const article = createBlock("article", [
