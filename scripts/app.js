@@ -2,17 +2,7 @@ class App {
 	constructor() {
 		this._data = recipes;
 		this._Recipes = [];
-		// this._options = { ingredients: [], appliance: [], ustensils: [] };
-		// this._optionsSelected = {
-		// 	ingredients: [],
-		// 	appliance: [],
-		// 	ustensils: [],
-		// };
-		// this._selectedFiltersLists = {
-		// 	ingredients: document.querySelector(".selected-filters__list__ingredients"),
-		// 	appliance: document.querySelector(".selected-filters__list__appliance"),
-		// 	ustensils: document.querySelector(".selected-filters__list__utensils"),
-		// };
+		this._optionsLists = { ingredients: [], appliance: [], ustensils: [] };
 	}
 
 	init() {
@@ -21,7 +11,29 @@ class App {
 			this._Recipes[i].createCardDOM();
 		});
 
+		this.initOptionsLists();
 		this.initSearchBar();
+	}
+
+	initOptionsLists() {
+		this._Recipes.forEach((recipe) => {
+			recipe.ingredients.forEach((item) => {
+				this._optionsLists.ingredients.push({ name: clear(item.ingredient), disabled: false });
+			});
+
+			this._optionsLists.appliance.push({ name: clear(recipe.appliance), disabled: false });
+
+			recipe.ustensils.forEach((ustensil) => {
+				this._optionsLists.ustensils.push({ name: clear(ustensil), disabled: false });
+			});
+		});
+
+		// Remove duplicates in optionsLists Arrays
+		for (let type in this._optionsLists) {
+			this._optionsLists[type] = [...new Map(this._optionsLists[type].map((item) => [item.name, item])).values()];
+		}
+
+		console.log(this._optionsLists);
 	}
 
 	initSearchBar() {

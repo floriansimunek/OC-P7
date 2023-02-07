@@ -44,23 +44,15 @@ class Recipe {
 	}
 
 	nameContains(str) {
-		return this.clear(this.name).includes(this.clear(str));
+		return clear(this.name).includes(clear(str));
 	}
 
 	descriptionContains(str) {
-		return this.clear(this.description).includes(this.clear(str));
+		return clear(this.description).includes(clear(str));
 	}
 
 	hasIngredient(str) {
-		return this.ingredients.some((item) => this.clear(item.ingredient).includes(this.clear(str)));
-	}
-
-	clear(str) {
-		return this.removeAccents(str).toLowerCase().trim();
-	}
-
-	removeAccents(str) {
-		return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+		return this.ingredients.some((item) => clear(item.ingredient).includes(clear(str)));
 	}
 
 	createCardDOM() {
