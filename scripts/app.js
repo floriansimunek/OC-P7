@@ -18,13 +18,13 @@ class App {
 	initOptionsLists() {
 		this._Recipes.forEach((recipe) => {
 			recipe.ingredients.forEach((item) => {
-				this._optionsLists.ingredients.push({ name: clear(item.ingredient), disabled: false });
+				this._optionsLists.ingredients.push({ name: clear(item.ingredient), selected: false, disabled: false });
 			});
 
-			this._optionsLists.appliance.push({ name: clear(recipe.appliance), disabled: false });
+			this._optionsLists.appliance.push({ name: clear(recipe.appliance), selected: false, disabled: false });
 
 			recipe.ustensils.forEach((ustensil) => {
-				this._optionsLists.ustensils.push({ name: clear(ustensil), disabled: false });
+				this._optionsLists.ustensils.push({ name: clear(ustensil), selected: false, disabled: false });
 			});
 		});
 
@@ -32,8 +32,6 @@ class App {
 		for (let type in this._optionsLists) {
 			this._optionsLists[type] = [...new Map(this._optionsLists[type].map((item) => [item.name, item])).values()];
 		}
-
-		console.log(this._optionsLists);
 	}
 
 	initSearchBar() {
