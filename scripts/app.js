@@ -185,7 +185,7 @@ class App {
 		const MIN_INPUT_LENGTH = 3;
 
 		searchBar.addEventListener("input", (e) => {
-			let inputValue = e.target.value;
+			let inputValue = clear(e.target.value);
 
 			this._Recipes.forEach((recipe) => {
 				const card = document.querySelector("#recipe_" + recipe.id);
@@ -219,6 +219,26 @@ class App {
 				input.addEventListener(event, () => {
 					input.classList.toggle("expanded");
 					event === "focus" ? (input.value = "") : (input.value = defaultInputValue);
+					input.classList.remove("open");
+					arrowInput.classList.remove("open");
+					filtersList.classList.remove("open");
+				});
+			});
+
+			input.addEventListener("input", (e) => {
+				let inputValue = clear(e.target.value);
+
+				input.classList.add("open");
+				arrowInput.classList.add("open");
+				filtersList.classList.add("open");
+
+				const options = document.querySelectorAll(".filters__option__list__item");
+				options.forEach((option) => {
+					if (option.dataset.value.includes(inputValue)) {
+						option.classList.remove("disabled");
+					} else {
+						option.classList.add("disabled");
+					}
 				});
 			});
 
