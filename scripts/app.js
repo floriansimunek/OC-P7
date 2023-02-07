@@ -43,10 +43,10 @@ class App {
 			});
 		});
 
-		//TODO: Sort by name
-		// Remove duplicates in optionsLists Arrays
+		// Remove duplicates in optionsLists Arrays & sort by names
 		for (let type in this._optionsLists) {
 			this._optionsLists[type] = [...new Map(this._optionsLists[type].map((item) => [item.name, item])).values()];
+			this._optionsLists[type] = this._optionsLists[type].sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
 		}
 	}
 
