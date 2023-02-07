@@ -219,9 +219,11 @@ class App {
 				input.addEventListener(event, () => {
 					input.classList.toggle("expanded");
 					event === "focus" ? (input.value = "") : (input.value = defaultInputValue);
-					input.classList.remove("open");
-					arrowInput.classList.remove("open");
-					filtersList.classList.remove("open");
+					setTimeout(() => {
+						input.classList.remove("open");
+						arrowInput.classList.remove("open");
+						filtersList.classList.remove("open");
+					}, 100);
 				});
 			});
 
