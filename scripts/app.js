@@ -38,7 +38,40 @@ class App {
 			this._optionsLists[type] = [...new Map(this._optionsLists[type].map((item) => [item.name, item])).values()];
 		}
 
+		this.initFiltersInputs();
 		this.appendOptionsToLists();
+	}
+
+	initFiltersInputs() {
+		const filtersBlock = document.querySelectorAll(".filters__block");
+
+		filtersBlock.forEach((block) => {
+			const input = block.querySelector(".filters__input");
+			const arrowInput = block.querySelector(".filters__block__arrow");
+			const filtersList = block.querySelector(".filters__option");
+
+			let defaultInputValue = input.value;
+
+			["focus", "blur"].forEach((event) => {
+				input.addEventListener(event, () => {
+					input.classList.toggle("expanded");
+					event === "focus" ? (input.value = "") : (input.value = defaultInputValue);
+				});
+			});
+
+			["focus", "blur"].forEach((event) => {
+				arrowInput.addEventListener(event, () => {
+					setTimeout(
+						() => {
+							input.classList.toggle("open");
+							arrowInput.classList.toggle("open");
+							filtersList.classList.toggle("open");
+						},
+						event === "focus" ? 0 : 100,
+					);
+				});
+			});
+		});
 	}
 
 	appendOptionsToLists() {
