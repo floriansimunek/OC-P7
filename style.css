@@ -198,6 +198,9 @@ header h1 {
   pointer-events: none;
   opacity: 0.6;
 }
+.filters__option__list__item.hidden {
+  display: none;
+}
 .filters__option__ingredients {
   height: 600px;
 }

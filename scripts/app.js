@@ -82,10 +82,16 @@ class App {
 	}
 
 	refreshOptionsDisplay() {
+		const ingredientsOptions = document.querySelectorAll(".filters__option__list__item[data-type='ingredients']");
+		ingredientsOptions.forEach((option) => {
+			this._optionsLists[option.dataset.type].map((item) => {
+				item.disabled = true;
+			});
+		});
+
 		for (let type in this._optionsLists) {
 			this._selectedOptionsLists[type] = [];
 
-			//TODO: Options don't get disabled
 			this._optionsLists[type].forEach((option) => {
 				if (option.disabled) {
 					const optionDOM = document.querySelector(`.filters__option__list__item[data-value="${option.name}"]`);
@@ -105,6 +111,25 @@ class App {
 				this._selectedOptionsListsElements[type].classList.remove("show");
 			}
 		}
+
+		//TODO: Add to devices and utensils
+		let ingredients = [];
+		this._Recipes.forEach((recipe) => {
+			if (recipe.hasIngredients(this._selectedOptionsLists["ingredients"])) {
+				recipe.ingredients.forEach((ingredient) => {
+					ingredients.push(ingredient);
+				});
+			}
+		});
+		ingredients = [...new Map(ingredients.map((item) => [item.ingredient, item])).values()];
+
+		ingredients.forEach((item) => {
+			ingredientsOptions.forEach((option) => {
+				if (clear(option.dataset.value) === clear(item.ingredient)) {
+					option.classList.remove("disabled");
+				}
+			});
+		});
 
 		this.refreshSelectedOptions();
 		this.filterByOptions();
@@ -227,6 +252,7 @@ class App {
 				});
 			});
 
+			// TODO: menu height
 			input.addEventListener("input", (e) => {
 				let inputValue = clear(e.target.value);
 
@@ -237,9 +263,9 @@ class App {
 				const options = document.querySelectorAll(".filters__option__list__item");
 				options.forEach((option) => {
 					if (option.dataset.value.includes(inputValue)) {
-						option.classList.remove("disabled");
+						option.classList.remove("hidden");
 					} else {
-						option.classList.add("disabled");
+						option.classList.add("hidden");
 					}
 				});
 			});
