@@ -85,6 +85,7 @@ class App {
 		for (let type in this._optionsLists) {
 			this._selectedOptionsLists[type] = [];
 
+			//TODO: Options don't get disabled
 			this._optionsLists[type].forEach((option) => {
 				if (option.disabled) {
 					const optionDOM = document.querySelector(`.filters__option__list__item[data-value="${option.name}"]`);
@@ -159,7 +160,6 @@ class App {
 		this._Recipes.forEach((recipe) => {
 			const card = document.querySelector("#recipe_" + recipe.id);
 
-			recipe.hasAppliance(this._selectedOptionsLists["ustensils"]);
 			if (
 				recipe.hasIngredients(this._selectedOptionsLists["ingredients"]) &&
 				recipe.hasAppliance(this._selectedOptionsLists["appliance"]) &&

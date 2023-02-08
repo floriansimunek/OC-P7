@@ -57,18 +57,13 @@ class Recipe {
 
 	hasIngredients(arr) {
 		let ingredients = [];
-		let finded = [];
 
 		if (arr.length > 0) {
 			this.ingredients.forEach((item) => {
 				ingredients.push(clear(item.ingredient));
 			});
 
-			arr.forEach((option) => {
-				finded = ingredients.filter((item) => clear(item) === clear(option));
-			});
-
-			return finded.length > 0 ? true : false;
+			return arr.every((value) => ingredients.includes(clear(value)));
 		} else {
 			return true;
 		}
@@ -83,14 +78,13 @@ class Recipe {
 	}
 
 	hasUstensils(arr) {
-		let finded = [];
+		let ustensils = [];
 
 		if (arr.length > 0) {
-			arr.forEach((option) => {
-				finded = this.ustensils.filter((item) => clear(item) === clear(option));
+			this._ustensils.forEach((item) => {
+				ustensils.push(clear(item));
 			});
-
-			return finded.length > 0 ? true : false;
+			return arr.every((value) => ustensils.includes(clear(value)));
 		} else {
 			return true;
 		}
