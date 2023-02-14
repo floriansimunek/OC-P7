@@ -31,17 +31,17 @@ class App {
 	}
 
 	initOptionsLists() {
-		this._Recipes.forEach((recipe) => {
-			recipe.ingredients.forEach((item) => {
-				this._optionsLists.ingredients.push({ name: clear(item.ingredient), selected: false, disabled: false });
-			});
+		for (let i = 0; this._Recipes.length > i; i++) {
+			for (let y = 0; this._Recipes[i].ingredients.length > y; y++) {
+				this._optionsLists.ingredients.push({ name: clear(this._Recipes[i].ingredients[y].ingredient), selected: false, disabled: false });
+			}
 
-			this._optionsLists.appliance.push({ name: clear(recipe.appliance), selected: false, disabled: false });
+			this._optionsLists.appliance.push({ name: clear(this._Recipes[i].appliance), selected: false, disabled: false });
 
-			recipe.ustensils.forEach((ustensil) => {
-				this._optionsLists.ustensils.push({ name: clear(ustensil), selected: false, disabled: false });
-			});
-		});
+			for (let y = 0; this._Recipes[i].ustensils.length > y; y++) {
+				this._optionsLists.ustensils.push({ name: clear(this._Recipes[i].ustensils[y]), selected: false, disabled: false });
+			}
+		}
 
 		// Remove duplicates in optionsLists Arrays & sort by names
 		for (let type in this._optionsLists) {
