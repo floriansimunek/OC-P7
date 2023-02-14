@@ -89,6 +89,20 @@ class App {
 			});
 		});
 
+		const appliancesOptions = document.querySelectorAll(".filters__option__list__item[data-type='appliance']");
+		appliancesOptions.forEach((option) => {
+			this._optionsLists[option.dataset.type].map((item) => {
+				item.disabled = true;
+			});
+		});
+
+		const ustensilsOptions = document.querySelectorAll(".filters__option__list__item[data-type='ustensils']");
+		ustensilsOptions.forEach((option) => {
+			this._optionsLists[option.dataset.type].map((item) => {
+				item.disabled = true;
+			});
+		});
+
 		for (let type in this._optionsLists) {
 			this._selectedOptionsLists[type] = [];
 
@@ -113,7 +127,6 @@ class App {
 			}
 		}
 
-		//TODO: Add to devices and utensils
 		let ingredients = [];
 		this._Recipes.forEach((recipe) => {
 			if (recipe.hasIngredients(this._selectedOptionsLists["ingredients"])) {
@@ -143,6 +156,42 @@ class App {
 			ingredientsOptions.forEach((option) => {
 				option.style.display = "block";
 				document.querySelector(".filters__option__ingredients").style.height = "600px";
+			});
+		}
+
+		if (this._selectedOptionsLists.appliance.length === 0) {
+			appliancesOptions.forEach((option) => {
+				option.style.display = "block";
+			});
+		}
+
+		let ustensils = [];
+		this._Recipes.forEach((recipe) => {
+			if (recipe.hasUstensils(this._selectedOptionsLists["ustensils"])) {
+				recipe.ustensils.forEach((ustensil) => {
+					ustensils.push(ustensil);
+				});
+			}
+		});
+		ustensils = [...new Map(ustensils.map((item) => [item, item])).values()];
+
+		ustensils.forEach((item) => {
+			ustensilsOptions.forEach((option) => {
+				this._selectedOptionsLists.ustensils.forEach((selected) => {
+					if (clear(option.dataset.value) === clear(item)) {
+						option.style.display = "block";
+					}
+
+					if (clear(option.dataset.value) === clear(selected)) {
+						option.style.display = "none";
+					}
+				});
+			});
+		});
+
+		if (this._selectedOptionsLists.ustensils.length === 0) {
+			ustensilsOptions.forEach((option) => {
+				option.style.display = "block";
 			});
 		}
 
