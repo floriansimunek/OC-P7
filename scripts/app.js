@@ -18,6 +18,7 @@ class App {
 	}
 
 	init() {
+		// CREATE RECIPE OBJECTS & CREATE CARDS IN DOM
 		for (let i = 0; this._data.length > i; i++) {
 			this._Recipes.push(new Recipe(this._data[i]));
 			this._Recipes[i].createCardDOM();
@@ -31,19 +32,23 @@ class App {
 	}
 
 	initOptionsLists() {
+		// GET ALL OPTIONS
 		for (let i = 0; this._Recipes.length > i; i++) {
+			// INGREDIENTS
 			for (let y = 0; this._Recipes[i].ingredients.length > y; y++) {
 				this._optionsLists.ingredients.push({ name: clear(this._Recipes[i].ingredients[y].ingredient), selected: false, disabled: false });
 			}
 
+			// APPLIANCE
 			this._optionsLists.appliance.push({ name: clear(this._Recipes[i].appliance), selected: false, disabled: false });
 
+			// USTENSILS
 			for (let y = 0; this._Recipes[i].ustensils.length > y; y++) {
 				this._optionsLists.ustensils.push({ name: clear(this._Recipes[i].ustensils[y]), selected: false, disabled: false });
 			}
 		}
 
-		// Remove duplicates in optionsLists Arrays & sort by names
+		// REMOVE DUPLICATES & SORT BY NAMES
 		for (let type in this._optionsLists) {
 			this._optionsLists[type] = [...new Map(this._optionsLists[type].map((item) => [item.name, item])).values()];
 			this._optionsLists[type] = this._optionsLists[type].sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
@@ -51,6 +56,7 @@ class App {
 	}
 
 	appendOptionsToLists() {
+		// CREATE LI FOR ALL OPTIONS AND APPEND TO UL
 		for (let type in this._optionsListsElements) {
 			this._optionsLists[type].forEach((option) => {
 				let li = createBlock("li", [
@@ -68,6 +74,7 @@ class App {
 	initEventsToOptions() {
 		this._optionsElements = document.querySelectorAll(".filters__option__list__item");
 
+		// IF OPTION CLICKED : CHANGE PROPERTIES
 		for (let i = 0; this._optionsElements.length > i; i++) {
 			this._optionsElements[i].addEventListener("click", () => {
 				let clickedItem = this._optionsLists[this._optionsElements[i].dataset.type].filter((item) => clear(item.name) === clear(this._optionsElements[i].dataset.value));
@@ -82,6 +89,7 @@ class App {
 	}
 
 	refreshOptionsDisplay() {
+		// DISABLE ALL INGREDIENTS OPTIONS
 		const ingredientsOptions = document.querySelectorAll(".filters__option__list__item[data-type='ingredients']");
 		for (let i = 0; ingredientsOptions.length > i; i++) {
 			this._optionsLists[ingredientsOptions[i].dataset.type].map((item) => {
@@ -89,6 +97,7 @@ class App {
 			});
 		}
 
+		// DISABLE ALL APPLIANCE OPTIONS
 		const appliancesOptions = document.querySelectorAll(".filters__option__list__item[data-type='appliance']");
 		for (let i = 0; appliancesOptions.length > i; i++) {
 			this._optionsLists[appliancesOptions[i].dataset.type].map((item) => {
@@ -96,6 +105,7 @@ class App {
 			});
 		}
 
+		// DISABLE ALL USTENSILS OPTIONS
 		const ustensilsOptions = document.querySelectorAll(".filters__option__list__item[data-type='ustensils']");
 		for (let i = 0; ustensilsOptions.length > i; i++) {
 			this._optionsLists[ustensilsOptions[i].dataset.type].map((item) => {
@@ -103,6 +113,7 @@ class App {
 			});
 		}
 
+		// DISPLAY OR HIDE FROM OPTION PROPERTIES
 		for (let type in this._optionsLists) {
 			this._selectedOptionsLists[type] = [];
 
@@ -122,11 +133,13 @@ class App {
 				}
 			}
 
+			// HIDE LIST IN DOM IF EMPTY
 			if (this._selectedOptionsLists[type].length == 0) {
 				this._selectedOptionsListsElements[type].classList.remove("show");
 			}
 		}
 
+		// GET ALL POSSIBLE INGREDIENTS COMBO
 		let ingredients = [];
 		for (let i = 0; this._Recipes.length > i; i++) {
 			if (this._Recipes[i].hasIngredients(this._selectedOptionsLists["ingredients"])) {
@@ -137,6 +150,7 @@ class App {
 		}
 		ingredients = [...new Map(ingredients.map((item) => [item.ingredient, item])).values()];
 
+		// DISPLAY OR HIDE OPTION IN LIST FROM POSSIBLE COMBO
 		for (let i = 0; ingredients.length > i; i++) {
 			for (let y = 0; ingredientsOptions.length > y; y++) {
 				for (let x = 0; this._selectedOptionsLists.ingredients.length > x; x++) {
@@ -152,6 +166,7 @@ class App {
 			}
 		}
 
+		// IF NO INGREDIENTS SELECTED = SHOW ALL
 		if (this._selectedOptionsLists.ingredients.length === 0) {
 			for (let i = 0; ingredientsOptions.length > i; i++) {
 				ingredientsOptions[i].style.display = "block";
@@ -159,12 +174,14 @@ class App {
 			}
 		}
 
+		// IF NO APPLIANCE SELECTED = SHOW ALL
 		if (this._selectedOptionsLists.appliance.length === 0) {
 			for (let i = 0; appliancesOptions.length > i; i++) {
 				appliancesOptions[i].style.display = "block";
 			}
 		}
 
+		// GET ALL POSSIBLE USTENSILS COMBO
 		let ustensils = [];
 		for (let i = 0; this._Recipes.length > i; i++) {
 			if (this._Recipes[i].hasUstensils(this._selectedOptionsLists["ustensils"])) {
@@ -175,6 +192,7 @@ class App {
 		}
 		ustensils = [...new Map(ustensils.map((item) => [item, item])).values()];
 
+		// DISPLAY OR HIDE OPTION IN LIST FROM POSSIBLE COMBO
 		for (let i = 0; ustensils.length > i; i++) {
 			for (let y = 0; ustensilsOptions.length > y; y++) {
 				for (let x = 0; this._selectedOptionsLists.ustensils.length > x; x++) {
@@ -189,6 +207,7 @@ class App {
 			}
 		}
 
+		// IF NO USTENSILS SELECTED = SHOW ALL
 		if (this._selectedOptionsLists.ustensils.length === 0) {
 			for (let i = 0; ustensilsOptions.length > i; i++) {
 				ustensilsOptions[i].style.display = "block";
@@ -204,6 +223,7 @@ class App {
 			this._selectedOptionsListsElements[type].innerHTML = "";
 		}
 
+		// CREATE BLOCK FOR EVERY SELECTED OPTIONS
 		for (let type in this._selectedOptionsLists) {
 			if (this._selectedOptionsLists[type].length > 0) {
 				for (let i = 0; this._selectedOptionsLists[type].length > i; i++) {
@@ -233,6 +253,7 @@ class App {
 		for (let i = 0; items.length > i; i++) {
 			const close = items[i].querySelector(".selected-filters__list__close");
 
+			// CLOSE FILTER EVENT
 			close.addEventListener("click", () => {
 				let clickedItem = this._optionsLists[items[i].dataset.type].filter((option) => clear(items[i].dataset.value) === clear(option.name));
 				this._optionsLists[items[i].dataset.type].map(() => {
@@ -249,12 +270,14 @@ class App {
 		for (let i = 0; this._Recipes.length > i; i++) {
 			const card = document.querySelector("#recipe_" + this._Recipes[i].id);
 
+			// SHOW OR HIDE CARDS FROM FILTERS
 			if (this._Recipes[i].hasIngredients(this._selectedOptionsLists["ingredients"]) && this._Recipes[i].hasAppliance(this._selectedOptionsLists["appliance"]) && this._Recipes[i].hasUstensils(this._selectedOptionsLists["ustensils"])) {
 				this.showElement(card);
 			} else {
 				this.hideElement(card);
 			}
 
+			// NO FILTERS = SHOW ALL CARDS
 			if (this._selectedOptionsLists.ingredients.length == 0 && this._selectedOptionsLists.appliance.length == 0 && this._selectedOptionsLists.ustensils.length == 0) {
 				this.showElement(card);
 			}
@@ -268,6 +291,7 @@ class App {
 		searchBar.addEventListener("input", (e) => {
 			let inputValue = clear(e.target.value);
 
+			// DISPLAY OR HIDE CARDS THAT MATCH USER INPUT FROM SEARCHBAR
 			for (let i = 0; this._Recipes.length > i; i++) {
 				const card = document.querySelector("#recipe_" + this._Recipes[i].id);
 
@@ -296,6 +320,7 @@ class App {
 
 			let defaultInputValue = input.value;
 
+			// IF IPNUT IS FOCUSED OR BLURED : Expand it, Change value, Close input, inputArrow & filtersList
 			["focus", "blur"].forEach((event) => {
 				input.addEventListener(event, () => {
 					input.classList.toggle("expanded");
@@ -309,6 +334,7 @@ class App {
 				});
 			});
 
+			// CHANGE OPTION DISPLAY TO MATCH USER INPUT
 			input.addEventListener("input", (e) => {
 				let inputValue = clear(e.target.value);
 
@@ -326,6 +352,7 @@ class App {
 				}
 			});
 
+			// IF INPUT BLURED : Display all options
 			input.addEventListener("blur", () => {
 				const options = document.querySelectorAll(".filters__option__list__item");
 				for (let i = 0; options.length > i; i++) {
@@ -333,6 +360,7 @@ class App {
 				}
 			});
 
+			// IF ARROW IS FOCUSED OR BLURED : Open input, arrowInput & filtersList
 			["focus", "blur"].forEach((event) => {
 				arrowInput.addEventListener(event, () => {
 					setTimeout(
@@ -348,11 +376,13 @@ class App {
 		}
 	}
 
+	// SHOW ELEMENT IN DOM
 	showElement(element) {
 		element.classList.add("show");
 		element.classList.remove("hidden");
 	}
 
+	// HIDE ELEMENT IN DOM
 	hideElement(element) {
 		element.classList.remove("show");
 		element.classList.add("hidden");
