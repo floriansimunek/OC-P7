@@ -246,10 +246,10 @@ class App {
 	}
 
 	filterByOptions() {
-		this._Recipes.forEach((recipe) => {
-			const card = document.querySelector("#recipe_" + recipe.id);
+		for (let i = 0; this._Recipes.length > i; i++) {
+			const card = document.querySelector("#recipe_" + this._Recipes[i].id);
 
-			if (recipe.hasIngredients(this._selectedOptionsLists["ingredients"]) && recipe.hasAppliance(this._selectedOptionsLists["appliance"]) && recipe.hasUstensils(this._selectedOptionsLists["ustensils"])) {
+			if (this._Recipes[i].hasIngredients(this._selectedOptionsLists["ingredients"]) && this._Recipes[i].hasAppliance(this._selectedOptionsLists["appliance"]) && this._Recipes[i].hasUstensils(this._selectedOptionsLists["ustensils"])) {
 				this.showElement(card);
 			} else {
 				this.hideElement(card);
@@ -258,7 +258,7 @@ class App {
 			if (this._selectedOptionsLists.ingredients.length == 0 && this._selectedOptionsLists.appliance.length == 0 && this._selectedOptionsLists.ustensils.length == 0) {
 				this.showElement(card);
 			}
-		});
+		}
 	}
 
 	initSearchBar() {
