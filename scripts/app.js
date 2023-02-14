@@ -83,44 +83,44 @@ class App {
 
 	refreshOptionsDisplay() {
 		const ingredientsOptions = document.querySelectorAll(".filters__option__list__item[data-type='ingredients']");
-		ingredientsOptions.forEach((option) => {
-			this._optionsLists[option.dataset.type].map((item) => {
+		for (let i = 0; ingredientsOptions.length > i; i++) {
+			this._optionsLists[ingredientsOptions[i].dataset.type].map((item) => {
 				item.disabled = true;
 			});
-		});
+		}
 
 		const appliancesOptions = document.querySelectorAll(".filters__option__list__item[data-type='appliance']");
-		appliancesOptions.forEach((option) => {
-			this._optionsLists[option.dataset.type].map((item) => {
+		for (let i = 0; appliancesOptions.length > i; i++) {
+			this._optionsLists[appliancesOptions[i].dataset.type].map((item) => {
 				item.disabled = true;
 			});
-		});
+		}
 
 		const ustensilsOptions = document.querySelectorAll(".filters__option__list__item[data-type='ustensils']");
-		ustensilsOptions.forEach((option) => {
-			this._optionsLists[option.dataset.type].map((item) => {
+		for (let i = 0; ustensilsOptions.length > i; i++) {
+			this._optionsLists[ustensilsOptions[i].dataset.type].map((item) => {
 				item.disabled = true;
 			});
-		});
+		}
 
 		for (let type in this._optionsLists) {
 			this._selectedOptionsLists[type] = [];
 
-			this._optionsLists[type].forEach((option) => {
-				if (option.disabled) {
-					const optionDOM = document.querySelector(`.filters__option__list__item[data-value="${option.name}"]`);
+			for (let i = 0; this._optionsLists[type].length > i; i++) {
+				if (this._optionsLists[type][i].disabled) {
+					const optionDOM = document.querySelector(`.filters__option__list__item[data-value="${this._optionsLists[type][i].name}"]`);
 					optionDOM.style.display = "none";
 				} else {
-					const optionDOM = document.querySelector(`.filters__option__list__item[data-value="${option.name}"]`);
+					const optionDOM = document.querySelector(`.filters__option__list__item[data-value="${this._optionsLists[type][i].name}"]`);
 					document.querySelector(".filters__option__ingredients").style.height = "auto";
 					optionDOM.style.display = "block";
 				}
 
-				if (option.selected) {
-					this._selectedOptionsLists[type].push(option.name);
+				if (this._optionsLists[type][i].selected) {
+					this._selectedOptionsLists[type].push(this._optionsLists[type][i].name);
 					this._selectedOptionsLists[type] = [...new Set(this._selectedOptionsLists[type])];
 				}
-			});
+			}
 
 			if (this._selectedOptionsLists[type].length == 0) {
 				this._selectedOptionsListsElements[type].classList.remove("show");
@@ -128,71 +128,71 @@ class App {
 		}
 
 		let ingredients = [];
-		this._Recipes.forEach((recipe) => {
-			if (recipe.hasIngredients(this._selectedOptionsLists["ingredients"])) {
-				recipe.ingredients.forEach((ingredient) => {
+		for (let i = 0; this._Recipes.length > i; i++) {
+			if (this._Recipes[i].hasIngredients(this._selectedOptionsLists["ingredients"])) {
+				this._Recipes[i].ingredients.forEach((ingredient) => {
 					ingredients.push(ingredient);
 				});
 			}
-		});
+		}
 		ingredients = [...new Map(ingredients.map((item) => [item.ingredient, item])).values()];
 
-		ingredients.forEach((item) => {
-			ingredientsOptions.forEach((option) => {
-				this._selectedOptionsLists.ingredients.forEach((selected) => {
-					if (clear(option.dataset.value) === clear(item.ingredient)) {
-						option.style.display = "block";
+		for (let i = 0; ingredients.length > i; i++) {
+			for (let y = 0; ingredientsOptions.length > y; y++) {
+				for (let x = 0; this._selectedOptionsLists.ingredients.length > x; x++) {
+					if (clear(ingredientsOptions[y].dataset.value) === clear(ingredients[i].ingredient)) {
+						ingredientsOptions[y].style.display = "block";
 						document.querySelector(".filters__option__ingredients").style.height = "auto";
 					}
 
-					if (clear(option.dataset.value) === clear(selected)) {
-						option.style.display = "none";
+					if (clear(ingredientsOptions[y].dataset.value) === clear(this._selectedOptionsLists.ingredients[x])) {
+						ingredientsOptions[y].style.display = "none";
 					}
-				});
-			});
-		});
+				}
+			}
+		}
 
 		if (this._selectedOptionsLists.ingredients.length === 0) {
-			ingredientsOptions.forEach((option) => {
-				option.style.display = "block";
+			for (let i = 0; ingredientsOptions.length > i; i++) {
+				ingredientsOptions[i].style.display = "block";
 				document.querySelector(".filters__option__ingredients").style.height = "600px";
-			});
+			}
 		}
 
 		if (this._selectedOptionsLists.appliance.length === 0) {
-			appliancesOptions.forEach((option) => {
-				option.style.display = "block";
-			});
+			for (let i = 0; appliancesOptions.length > i; i++) {
+				appliancesOptions[i].style.display = "block";
+			}
 		}
 
 		let ustensils = [];
-		this._Recipes.forEach((recipe) => {
-			if (recipe.hasUstensils(this._selectedOptionsLists["ustensils"])) {
-				recipe.ustensils.forEach((ustensil) => {
-					ustensils.push(ustensil);
-				});
+		for (let i = 0; this._Recipes.length > i; i++) {
+			if (this._Recipes[i].hasUstensils(this._selectedOptionsLists["ustensils"])) {
+				for (let y = 0; this._Recipes[i].ustensils.length > y; y++) {
+					ustensils.push(this._Recipes[i].ustensils[y]);
+				}
 			}
-		});
+		}
 		ustensils = [...new Map(ustensils.map((item) => [item, item])).values()];
 
-		ustensils.forEach((item) => {
-			ustensilsOptions.forEach((option) => {
-				this._selectedOptionsLists.ustensils.forEach((selected) => {
-					if (clear(option.dataset.value) === clear(item)) {
-						option.style.display = "block";
+		for (let i = 0; ustensils.length > i; i++) {
+			for (let y = 0; ustensilsOptions.length > y; y++) {
+				for (let x = 0; this._selectedOptionsLists.ustensils.length > x; x++) {
+					if (clear(ustensilsOptions[y].dataset.value) === clear(ustensils[i])) {
+						ustensilsOptions[y].style.display = "block";
 					}
 
-					if (clear(option.dataset.value) === clear(selected)) {
-						option.style.display = "none";
+					if (clear(ustensilsOptions[y].dataset.value) === clear(this._selectedOptionsLists.ustensils[x])) {
+						ustensilsOptions[y].style.display = "none";
 					}
-				});
-			});
-		});
+				}
+			}
+		}
 
 		if (this._selectedOptionsLists.ustensils.length === 0) {
-			ustensilsOptions.forEach((option) => {
-				option.style.display = "block";
-			});
+			for (let i = 0; ustensilsOptions.length > i; i++) {
+				ustensilsOptions[i].style.display = "block";
+			}
 		}
 
 		this.refreshSelectedOptions();
