@@ -68,17 +68,17 @@ class App {
 	initEventsToOptions() {
 		this._optionsElements = document.querySelectorAll(".filters__option__list__item");
 
-		this._optionsElements.forEach((option) => {
-			option.addEventListener("click", () => {
-				let clickedItem = this._optionsLists[option.dataset.type].filter((item) => clear(item.name) === clear(option.dataset.value));
-				this._optionsLists[option.dataset.type].map(() => {
+		for (let i = 0; this._optionsElements.length > i; i++) {
+			this._optionsElements[i].addEventListener("click", () => {
+				let clickedItem = this._optionsLists[this._optionsElements[i].dataset.type].filter((item) => clear(item.name) === clear(this._optionsElements[i].dataset.value));
+				this._optionsLists[this._optionsElements[i].dataset.type].map(() => {
 					clickedItem[0].selected = true;
 					clickedItem[0].disabled = true;
 				});
 
 				this.refreshOptionsDisplay();
 			});
-		});
+		}
 	}
 
 	refreshOptionsDisplay() {
