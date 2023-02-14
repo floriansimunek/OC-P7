@@ -206,21 +206,21 @@ class App {
 
 		for (let type in this._selectedOptionsLists) {
 			if (this._selectedOptionsLists[type].length > 0) {
-				this._selectedOptionsLists[type].forEach((selectedOption) => {
+				for (let i = 0; this._selectedOptionsLists[type].length > i; i++) {
 					let li = createBlock("li", [
 						{ name: "class", value: "selected-filters__list__item" },
-						{ name: "data-value", value: selectedOption },
+						{ name: "data-value", value: this._selectedOptionsLists[type][i] },
 						{ name: "data-type", value: type },
 					]);
 					let img = createImage("./assets/icons/close.svg", [{ name: "class", value: "selected-filters__list__close" }]);
 					let span = createBlock("span");
 
-					span.textContent = selectedOption;
+					span.textContent = this._selectedOptionsLists[type][i];
 					li.append(span, img);
 
 					this._selectedOptionsListsElements[type].classList.add("show");
 					this._selectedOptionsListsElements[type].append(li);
-				});
+				}
 			}
 		}
 
