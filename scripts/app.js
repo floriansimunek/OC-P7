@@ -268,17 +268,17 @@ class App {
 		searchBar.addEventListener("input", (e) => {
 			let inputValue = clear(e.target.value);
 
-			this._Recipes.forEach((recipe) => {
-				const card = document.querySelector("#recipe_" + recipe.id);
+			for (let i = 0; this._Recipes.length > i; i++) {
+				const card = document.querySelector("#recipe_" + this._Recipes[i].id);
 
-				if (inputValue.length >= MIN_INPUT_LENGTH && recipeFilter(recipe, inputValue)) {
+				if (inputValue.length >= MIN_INPUT_LENGTH && recipeFilter(this._Recipes[i], inputValue)) {
 					this.showElement(card);
 				} else if (inputValue.length < MIN_INPUT_LENGTH) {
 					this.showElement(card);
 				} else {
 					this.hideElement(card);
 				}
-			});
+			}
 		});
 
 		function recipeFilter(recipe, inputValue) {
@@ -289,10 +289,10 @@ class App {
 	initFiltersInputs() {
 		const filtersBlock = document.querySelectorAll(".filters__block");
 
-		filtersBlock.forEach((block) => {
-			const input = block.querySelector(".filters__input");
-			const arrowInput = block.querySelector(".filters__block__arrow");
-			const filtersList = block.querySelector(".filters__option");
+		for (let i = 0; filtersBlock.length > i; i++) {
+			const input = filtersBlock[i].querySelector(".filters__input");
+			const arrowInput = filtersBlock[i].querySelector(".filters__block__arrow");
+			const filtersList = filtersBlock[i].querySelector(".filters__option");
 
 			let defaultInputValue = input.value;
 
@@ -317,20 +317,20 @@ class App {
 				filtersList.classList.add("open");
 
 				const options = document.querySelectorAll(".filters__option__list__item");
-				options.forEach((option) => {
-					if (option.dataset.value.includes(inputValue)) {
-						option.classList.remove("hidden");
+				for (let i = 0; options.length > i; i++) {
+					if (options[i].dataset.value.includes(inputValue)) {
+						options[i].classList.remove("hidden");
 					} else {
-						option.classList.add("hidden");
+						options[i].classList.add("hidden");
 					}
-				});
+				}
 			});
 
 			input.addEventListener("blur", () => {
 				const options = document.querySelectorAll(".filters__option__list__item");
-				options.forEach((option) => {
-					option.classList.remove("hidden");
-				});
+				for (let i = 0; options.length > i; i++) {
+					options[i].classList.remove("hidden");
+				}
 			});
 
 			["focus", "blur"].forEach((event) => {
@@ -345,7 +345,7 @@ class App {
 					);
 				});
 			});
-		});
+		}
 	}
 
 	showElement(element) {
