@@ -367,3 +367,14 @@ header {
 		}
 	}
 }
+
+.no_recipe_found {
+	position: absolute;
+	width: 50vw;
+	text-align: center;
+	left: 50%;
+	transform: translate(-50%, 0);
+	color: red;
+	font-weight: bold;
+	font-size: 2rem;
+}
