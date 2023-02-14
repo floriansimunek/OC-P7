@@ -84,6 +84,7 @@ class App {
 				});
 
 				this.refreshOptionsDisplay();
+				this.checkIfRecipesFound();
 			});
 		}
 	}
@@ -262,6 +263,7 @@ class App {
 				});
 
 				this.refreshOptionsDisplay();
+				this.checkIfRecipesFound();
 			});
 		}
 	}
@@ -302,6 +304,8 @@ class App {
 				} else {
 					this.hideElement(card);
 				}
+
+				this.checkIfRecipesFound();
 			}
 		});
 
@@ -373,6 +377,24 @@ class App {
 					);
 				});
 			});
+		}
+	}
+
+	// DISPLAY MESSAGE IF NO RECIPES FOUND
+	checkIfRecipesFound() {
+		let cards = Array.from(document.querySelectorAll(".recipe-card"));
+		let check = cards.every((card) => card.classList.contains("hidden"));
+		const recipesBlock = document.querySelector(".recipes");
+		if (check) {
+			let p = createParagraph("Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.", [{ name: "class", value: "no_recipe_found" }]);
+
+			if (!recipesBlock.querySelector(".no_recipe_found")) {
+				recipesBlock.append(p);
+			}
+		} else {
+			if (recipesBlock.querySelector(".no_recipe_found")) {
+				recipesBlock.querySelector(".no_recipe_found").remove();
+			}
 		}
 	}
 
