@@ -95,10 +95,11 @@ class App {
 			this._optionsLists[type].forEach((option) => {
 				if (option.disabled) {
 					const optionDOM = document.querySelector(`.filters__option__list__item[data-value="${option.name}"]`);
-					optionDOM.classList.add("disabled");
+					optionDOM.style.display = "none";
 				} else {
 					const optionDOM = document.querySelector(`.filters__option__list__item[data-value="${option.name}"]`);
-					optionDOM.classList.remove("disabled");
+					document.querySelector(".filters__option__ingredients").style.height = "auto";
+					optionDOM.style.display = "block";
 				}
 
 				if (option.selected) {
@@ -125,11 +126,25 @@ class App {
 
 		ingredients.forEach((item) => {
 			ingredientsOptions.forEach((option) => {
-				if (clear(option.dataset.value) === clear(item.ingredient)) {
-					option.classList.remove("disabled");
-				}
+				this._selectedOptionsLists.ingredients.forEach((selected) => {
+					if (clear(option.dataset.value) === clear(item.ingredient)) {
+						option.style.display = "block";
+						document.querySelector(".filters__option__ingredients").style.height = "auto";
+					}
+
+					if (clear(option.dataset.value) === clear(selected)) {
+						option.style.display = "none";
+					}
+				});
 			});
 		});
+
+		if (this._selectedOptionsLists.ingredients.length === 0) {
+			ingredientsOptions.forEach((option) => {
+				option.style.display = "block";
+				document.querySelector(".filters__option__ingredients").style.height = "600px";
+			});
+		}
 
 		this.refreshSelectedOptions();
 		this.filterByOptions();
@@ -185,21 +200,13 @@ class App {
 		this._Recipes.forEach((recipe) => {
 			const card = document.querySelector("#recipe_" + recipe.id);
 
-			if (
-				recipe.hasIngredients(this._selectedOptionsLists["ingredients"]) &&
-				recipe.hasAppliance(this._selectedOptionsLists["appliance"]) &&
-				recipe.hasUstensils(this._selectedOptionsLists["ustensils"])
-			) {
+			if (recipe.hasIngredients(this._selectedOptionsLists["ingredients"]) && recipe.hasAppliance(this._selectedOptionsLists["appliance"]) && recipe.hasUstensils(this._selectedOptionsLists["ustensils"])) {
 				this.showElement(card);
 			} else {
 				this.hideElement(card);
 			}
 
-			if (
-				this._selectedOptionsLists.ingredients.length == 0 &&
-				this._selectedOptionsLists.appliance.length == 0 &&
-				this._selectedOptionsLists.ustensils.length == 0
-			) {
+			if (this._selectedOptionsLists.ingredients.length == 0 && this._selectedOptionsLists.appliance.length == 0 && this._selectedOptionsLists.ustensils.length == 0) {
 				this.showElement(card);
 			}
 		});
@@ -244,6 +251,7 @@ class App {
 				input.addEventListener(event, () => {
 					input.classList.toggle("expanded");
 					event === "focus" ? (input.value = "") : (input.value = defaultInputValue);
+					event === "focus" ? (document.querySelector(".filters__option__ingredients").style.height = "auto") : (document.querySelector(".filters__option__ingredients").style.height = "600px");
 					setTimeout(() => {
 						input.classList.remove("open");
 						arrowInput.classList.remove("open");
@@ -252,7 +260,6 @@ class App {
 				});
 			});
 
-			// TODO: menu height
 			input.addEventListener("input", (e) => {
 				let inputValue = clear(e.target.value);
 
@@ -267,6 +274,13 @@ class App {
 					} else {
 						option.classList.add("hidden");
 					}
+				});
+			});
+
+			input.addEventListener("blur", () => {
+				const options = document.querySelectorAll(".filters__option__list__item");
+				options.forEach((option) => {
+					option.classList.remove("hidden");
 				});
 			});
 
