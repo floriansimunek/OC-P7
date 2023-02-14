@@ -230,19 +230,19 @@ class App {
 	initCloseOption() {
 		const items = document.querySelectorAll(".selected-filters__list__item");
 
-		items.forEach((item) => {
-			const close = item.querySelector(".selected-filters__list__close");
+		for (let i = 0; items.length > i; i++) {
+			const close = items[i].querySelector(".selected-filters__list__close");
 
 			close.addEventListener("click", () => {
-				let clickedItem = this._optionsLists[item.dataset.type].filter((option) => clear(item.dataset.value) === clear(option.name));
-				this._optionsLists[item.dataset.type].map(() => {
+				let clickedItem = this._optionsLists[items[i].dataset.type].filter((option) => clear(items[i].dataset.value) === clear(option.name));
+				this._optionsLists[items[i].dataset.type].map(() => {
 					clickedItem[0].selected = false;
 					clickedItem[0].disabled = false;
 				});
 
 				this.refreshOptionsDisplay();
 			});
-		});
+		}
 	}
 
 	filterByOptions() {
