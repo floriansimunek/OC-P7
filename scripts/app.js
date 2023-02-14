@@ -18,10 +18,10 @@ class App {
 	}
 
 	init() {
-		this._data.forEach((recipe, i) => {
-			this._Recipes.push(new Recipe(recipe));
+		for (let i = 0; this._data.length > i; i++) {
+			this._Recipes.push(new Recipe(this._data[i]));
 			this._Recipes[i].createCardDOM();
-		});
+		}
 
 		this.initOptionsLists();
 		this.appendOptionsToLists();
