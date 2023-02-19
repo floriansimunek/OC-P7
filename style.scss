@@ -238,7 +238,7 @@ header {
 				}
 
 				&.hidden {
-					display: none;
+					display: none !important;
 				}
 			}
 		}
@@ -291,7 +291,7 @@ header {
 
 	.recipe-card {
 		&.hidden {
-			display: none;
+			display: none !important;
 		}
 
 		&.show {
