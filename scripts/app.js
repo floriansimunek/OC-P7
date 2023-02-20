@@ -36,15 +36,27 @@ class App {
 		this._Recipes.forEach((recipe) => {
 			// INGREDIENTS
 			recipe.ingredients.forEach((item) => {
-				this._optionsLists.ingredients.push({ name: clear(item.ingredient), selected: false, disabled: false });
+				this._optionsLists.ingredients.push({
+					name: clear(item.ingredient),
+					selected: false,
+					disabled: false,
+				});
 			});
 
 			//APPLIANCE
-			this._optionsLists.appliance.push({ name: clear(recipe.appliance), selected: false, disabled: false });
+			this._optionsLists.appliance.push({
+				name: clear(recipe.appliance),
+				selected: false,
+				disabled: false,
+			});
 
 			// USTENSILS
 			recipe.ustensils.forEach((ustensil) => {
-				this._optionsLists.ustensils.push({ name: clear(ustensil), selected: false, disabled: false });
+				this._optionsLists.ustensils.push({
+					name: clear(ustensil),
+					selected: false,
+					disabled: false,
+				});
 			});
 		});
 
@@ -271,9 +283,11 @@ class App {
 	filterByOptions() {
 		this._Recipes.forEach((recipe) => {
 			const card = document.querySelector("#recipe_" + recipe.id);
+			const searchBar = document.querySelector("#searchBar");
+			let inputValue = searchBar.value;
 
 			// SHOW OR HIDE CARDS FROM FILTERS
-			if (recipe.hasIngredients(this._selectedOptionsLists["ingredients"]) && recipe.hasAppliance(this._selectedOptionsLists["appliance"]) && recipe.hasUstensils(this._selectedOptionsLists["ustensils"])) {
+			if (recipe.hasIngredients(this._selectedOptionsLists["ingredients"]) && recipe.hasAppliance(this._selectedOptionsLists["appliance"]) && recipe.hasUstensils(this._selectedOptionsLists["ustensils"]) && this.recipeFilter(recipe, inputValue)) {
 				this.showElement(card);
 			} else {
 				this.hideElement(card);
@@ -296,11 +310,27 @@ class App {
 			// DISPLAY OR HIDE CARDS THAT MATCH USER INPUT FROM SEARCHBAR
 			this._Recipes.forEach((recipe) => {
 				const card = document.querySelector("#recipe_" + recipe.id);
+				const ingredientsOptions = document.querySelectorAll(".filters__option__list__item[data-type='ingredients']");
 
-				if (inputValue.length >= MIN_INPUT_LENGTH && recipeFilter(recipe, inputValue)) {
+				if (inputValue.length >= MIN_INPUT_LENGTH && this.recipeFilter(recipe, inputValue)) {
 					this.showElement(card);
+
+					if (recipe.hasIngredient(inputValue)) {
+						ingredientsOptions.forEach((option) => {
+							if (clear(option.dataset.value).includes(inputValue)) {
+								option.style.display = "block";
+								document.querySelector(".filters__option__ingredients").style.height = "auto";
+							} else {
+								option.style.display = "none";
+							}
+						});
+					}
 				} else if (inputValue.length < MIN_INPUT_LENGTH) {
 					this.showElement(card);
+					document.querySelector(".filters__option__ingredients").style.height = "600px";
+					ingredientsOptions.forEach((option) => {
+						option.style.display = "block";
+					});
 				} else {
 					this.hideElement(card);
 				}
@@ -308,10 +338,10 @@ class App {
 				this.checkIfRecipesFound();
 			});
 		});
+	}
 
-		function recipeFilter(recipe, inputValue) {
-			return recipe.nameContains(inputValue) || recipe.descriptionContains(inputValue) || recipe.hasIngredient(inputValue);
-		}
+	recipeFilter(recipe, inputValue) {
+		return recipe.nameContains(inputValue) || recipe.descriptionContains(inputValue) || recipe.hasIngredient(inputValue);
 	}
 
 	initFiltersInputs() {
